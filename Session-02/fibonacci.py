@@ -1,0 +1,9 @@
+counter = 0
+x = 0
+y = 1
+while counter <= 11:
+    print(x, end=' ')
+    new = x + y
+    x = y
+    y = new
+    counter += 1
