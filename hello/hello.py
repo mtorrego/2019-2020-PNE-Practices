@@ -1,2 +1,2 @@
 print("uuff")
-print("just testing....")
+print("just testing...")
