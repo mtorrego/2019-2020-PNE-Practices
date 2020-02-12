@@ -6,7 +6,9 @@ FILENAME = "U5.txt"
 # -- Open and read the file
 file_contents = Path(FILENAME).read_text()
 
-x = file_contents.split("\n")
-e = x[1:]
-for i in e:
-    print(i, end="")
+q = file_contents.split("\n")
+file_contentss = q[1:]
+e = "".join(file_contentss)
+print(e)
+#for i in e:
+ #   print(i, end="")

@@ -5,11 +5,7 @@ FILENAME = "ADA.txt"
 
 # -- Open and read the file
 file_contents = Path(FILENAME).read_text()
-
-# -- Print the contents on the console
-counter = 0
-x = file_contents.split("\n")
-e = x[1:]
-for i in e:
-    counter += 1
-print(counter)
+q = file_contents.split("\n")
+file_contentss = q[1:]
+e = "".join(file_contentss)
+print(len(e))
