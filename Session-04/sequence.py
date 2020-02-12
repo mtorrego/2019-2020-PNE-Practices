@@ -7,4 +7,9 @@ FILENAME = "ADA.txt"
 file_contents = Path(FILENAME).read_text()
 
 # -- Print the contents on the console
-print(file_contents)
+counter = 0
+x = file_contents.split("\n")
+e = x[1:]
+for i in e:
+    counter += 1
+print(counter)
