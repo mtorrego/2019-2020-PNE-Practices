@@ -12,10 +12,9 @@ def seq_len(seq):
     sequence = seq_read_fasta(seq)
     return len(sequence)
 
-def seq_count_base(seq):
-    a = seq.count("A")
-    c = seq.count("C")
-    g = seq.count("G")
-    t = seq.count("T")
-    return a,c,g,t
+def seq_count_base(b):
+    counter = 0
+    for base in b:
+        counter += 1
+    return counter
 
