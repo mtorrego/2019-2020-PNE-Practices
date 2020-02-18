@@ -10,6 +10,8 @@ class Seq:
     def __str__(self):
         return self.strbases
 
+
+
     def len(self):
         return len(self.strbases)
 
