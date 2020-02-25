@@ -8,14 +8,6 @@ for name in list_names:
     print("The most common base in ", name, "is :")
     x = seq_read_fasta(FOLDER + name + ext)
     y = seq_count(x)
-    #print(y)
-    #for keys, values in y.items():
     t = y.values()
     w = max(t)
     print(w)
-        #maxx = ""
-        #while keys > maxx:
-         #   maxx = keys
-          #  print(maxx)
-        #print(y)
-        #for keys, values in y:
