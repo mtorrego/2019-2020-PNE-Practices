@@ -1,5 +1,5 @@
 from pathlib import Path
-212.128.253.137
+#212.128.253.137
 
 
 def seq_ping():
@@ -14,8 +14,8 @@ def seq_read_fasta(filename):
 
 
 def seq_len(seq):
-    sequence = seq_read_fasta(seq)
-    return len(sequence)
+    #sequence = seq_read_fasta(seq)
+    return len(seq)
 
 
 def seq_count_base(sequence, base):

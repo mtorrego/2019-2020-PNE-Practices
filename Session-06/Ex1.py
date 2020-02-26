@@ -3,11 +3,15 @@ class Seq:
     def __init__(self, strbases):
         self.strbases = strbases
         if "A" and "C" and "G" and "T" in strbases:
+            return "New sequence created!"
+        else:
+            return "ERROR"
+
+    def __str__(self):
+        if "A" and "C" and "G" and "T" in self.strbases:
             print("New sequence created!")
         else:
             print("ERROR")
-
-    def __str__(self):
         return self.strbases
 
 
