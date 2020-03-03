@@ -1,20 +1,21 @@
 class Seq:
     """A class for representing sequence objects"""
     def __init__(self, strbases):
-        self.strbases = strbases
-        if "A" and "C" and "G" and "T" in strbases:
-            return "New sequence created!"
-        else:
-            return "ERROR"
+        #self.strbases = strbases
+        #print(self.strbases)
+        bases = ["A", "C", "G", "T"]
+        for base in strbases:
+            if base not in bases:
+                self.strbases = "ERROR"
+                print(self.strbases)
+                return
+            else:
+                print("New sequence created!")
+                self.strbases = strbases
+                return
 
     def __str__(self):
-        if "A" and "C" and "G" and "T" in self.strbases:
-            print("New sequence created!")
-        else:
-            print("ERROR")
         return self.strbases
-
-
 
     def len(self):
         return len(self.strbases)
