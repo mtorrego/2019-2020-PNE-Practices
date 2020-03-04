@@ -13,12 +13,13 @@ class Seq:
 class Gene(Seq):
     pass
 
+
 def print_seqs(ls):
+    index = -1
     for e in ls:
-       print(e)
+        index += 1
+        print(f"Sequence : {index}, Length: ({e.len()}), {e}")
+
 
 seq_list = [Seq("ACT"), Seq("GATA"), Seq("CAGATA")]
-print(print_seqs(seq_list))
-s = a.len()
-print("(Length:", s, ")", a)
-
+print_seqs(seq_list)
