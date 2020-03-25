@@ -29,6 +29,11 @@ class Seq:
     def count_base(self, base):
         return self.strbases.count(base)
 
+    def count(self):
+        result = {"A": self.count_base("A"), "C": self.count_base("C"),
+                  "G": self.count_base("G"), "T": self.count_base("T")}
+        return result
+
     pass
 
 
@@ -40,6 +45,14 @@ def print_seqs(ls):
         print(f"Sequence : {index}, Length: ({e.len()}), {e}")
         for base in listbases:
             print(f"Base : {base} : {e.count_base(base)} ")
+
+
+def print_seqs1(ls):
+    index = 0
+    for e in ls:
+        index += 1
+        print(f"Sequence : {index}, Length: ({e.len()}), {e}")
+        print(f" Bases : {e.count()}")
 
 
 def generate_seqs(pattern, number):
