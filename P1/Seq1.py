@@ -34,6 +34,24 @@ class Seq:
                   "G": self.count_base("G"), "T": self.count_base("T")}
         return result
 
+    def seq_reverse(self):
+        if not self.len():
+            return self.strbases
+        else:
+            inverse = self.strbases[::-1]
+            return inverse
+
+    def seq_complement(self):
+        if not self.len():
+            return self.strbases
+        else:
+            complement_dictionary = {"A": "T", "C": "G", "G": "C", "T": "A"}
+            new_list = ""
+            for n in self.strbases:
+                a = complement_dictionary[n]
+                new_list = new_list + a
+            return new_list
+
     pass
 
 
@@ -53,6 +71,8 @@ def print_seqs1(ls):
         index += 1
         print(f"Sequence : {index}, Length: ({e.len()}), {e}")
         print(f" Bases : {e.count()}")
+        print(f" Reverse : {e.seq_reverse()}")
+        print(f" Complement: {e.seq_complement()}")
 
 
 def generate_seqs(pattern, number):

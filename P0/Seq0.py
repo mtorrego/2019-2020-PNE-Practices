@@ -14,7 +14,6 @@ def seq_read_fasta(filename):
 
 
 def seq_len(seq):
-    #sequence = seq_read_fasta(seq)
     return len(seq)
 
 
@@ -28,8 +27,8 @@ def seq_count(sequence):
 
 
 def seq_reverse(sequence):
-    cadenaInvertida = sequence[::-1]
-    return cadenaInvertida
+    cadenainvertida = sequence[::-1]
+    return cadenainvertida
 
 
 def seq_complement(seq):
@@ -39,7 +38,3 @@ def seq_complement(seq):
         a = complement_dictionary[n]
         new_list = new_list + a
     return new_list
-
-#def ex8(seq):
-
-
