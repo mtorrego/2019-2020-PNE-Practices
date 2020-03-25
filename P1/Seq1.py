@@ -1,3 +1,4 @@
+from pathlib import Path
 class Seq:
     """A class for representing sequence objects"""
     def __init__(self, strbases="NULL"):
@@ -51,6 +52,12 @@ class Seq:
                 a = complement_dictionary[n]
                 new_list = new_list + a
             return new_list
+
+    def seq_read_fasta(self):
+        file_contents = Path(self.strbases).read_text()
+        content = file_contents.split("\n")[1:]
+        e = "".join(content)
+        return e
 
     pass
 
