@@ -1,7 +1,9 @@
 from Seq1 import *
 # -- Creating a Null sequence
-s = Seq("NULL")
-print_seqs(s)
+s1 = Seq()
+#
 # -- Creating a valid sequence
-e = Seq("TATAC")
-print_seqs(e)
+s2 = Seq("TATAC")
+
+print("Sequence 1", s1)
+print("Sequence 2", s2)

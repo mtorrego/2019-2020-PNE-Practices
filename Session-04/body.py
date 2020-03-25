@@ -9,5 +9,3 @@ file_contents = Path(FILENAME).read_text()
 content = file_contents.split("\n")[1:]
 e = "".join(content)
 print(e)
-#for i in e:
- #   print(i, end="")
