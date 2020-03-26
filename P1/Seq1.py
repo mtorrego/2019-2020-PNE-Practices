@@ -1,4 +1,6 @@
 from pathlib import Path
+
+
 class Seq:
     """A class for representing sequence objects"""
     def __init__(self, strbases="NULL"):
@@ -98,8 +100,8 @@ def ex10(ls):
     s = lista.index(a)
     r = y.keys()
     lista2 = list(r)
-    solucion = lista2[s]
-    return solucion
+    solution = lista2[s]
+    return solution
 
 
 def generate_seqs(pattern, number):
