@@ -1,5 +1,5 @@
 import socket
-
+ip_casa = "192.168.8.108"
 IP = "212.128.253.128"
 PORT = 8080
 
