@@ -2,7 +2,6 @@ import socket
 
 # SERVER IP, PORT
 PORT = 8081
-#IP = "192.168.124.179"
 IP = "192.168.8.108"
 
 while True:
