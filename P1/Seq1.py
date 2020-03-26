@@ -53,11 +53,12 @@ class Seq:
                 new_list = new_list + a
             return new_list
 
-    def seq_read_fasta(self):
-        file_contents = Path(self.strbases).read_text()
+    def read_fasta(self, filename):
+        file_contents = Path(filename).read_text()
         content = file_contents.split("\n")[1:]
         e = "".join(content)
-        return e
+        self.strbases = e
+        return self.strbases
 
     pass
 
@@ -80,6 +81,25 @@ def print_seqs1(ls):
         print(f" Bases : {e.count()}")
         print(f" Reverse : {e.seq_reverse()}")
         print(f" Complement: {e.seq_complement()}")
+
+
+def print_seqs2(ls):
+    print(f"Sequence : Length: ({ls.len()}), {ls}")
+    print(f" Bases : {ls.count()}")
+    print(f" Reverse : {ls.seq_reverse()}")
+    print(f" Complement: {ls.seq_complement()}")
+
+
+def ex10(ls):
+    y = ls.count()
+    t = y.values()
+    lista = list(t)
+    a = max(lista)
+    s = lista.index(a)
+    r = y.keys()
+    lista2 = list(r)
+    solucion = lista2[s]
+    return solucion
 
 
 def generate_seqs(pattern, number):

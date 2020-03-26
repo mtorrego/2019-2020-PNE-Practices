@@ -1,4 +1,4 @@
-from Seq1 import Seq
+from Seq1 import *
 # -- Create a Null sequence
 s = Seq()
 
@@ -6,5 +6,6 @@ s = Seq()
 FOLDER = "../Session-04/"
 list_names = ["U5", "ADA", "FRAT1", "FXN", "RNU6_269P"]
 ext = ".txt"
-s.read_fasta(FOLDER + "U5" + ext)
-print_seqs()
+a = s.read_fasta(FOLDER + "U5" + ext)
+sequence = Seq(a)
+print_seqs2(sequence)
