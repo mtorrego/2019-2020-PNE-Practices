@@ -17,8 +17,10 @@ ls.bind((IP, PORT))
 ls.listen()
 
 print("Server is configured!!")
-
-while True:
+number_con = 0
+listclient = []
+aa = True
+while aa:
     print("Waiting for Clients to connect")
     try:
         # --- Step 4: Wait for clients tro connect
@@ -28,13 +30,22 @@ while True:
         ls.close()
         exit()
     else:
-        print("A client has connected to the server!")
-        # --- Step 5: Receiving information from the client
         msg_raw = cs.recv(2000)
         msg = msg_raw.decode()
 
         print(f" Received message: ", end="")
         termcolor.cprint(msg, "green")
+
+        number_con += 1
+        print("CONNECTION: {}. From the IP: {}".format(number_con, client_ip_port))
+        listclient.append("Client: {}. {}".format(number_con, client_ip_port))
+        if number_con == 5:
+            print("The following clients has connected to the server: ")
+            for element in listclient:
+                print(element)
+            aa = False
+        # --- Step 5: Receiving information from the client
+
 
 
         # --- Step 6: Send a response message to the client

@@ -17,6 +17,7 @@ ls.bind((IP, PORT))
 ls.listen()
 
 print("Server is configured!!")
+number_con = 0
 
 while True:
     print("Waiting for Clients to connect")
@@ -28,7 +29,9 @@ while True:
         ls.close()
         exit()
     else:
-        print("A client has connected to the server!")
+        number_con += 1
+        print("CONNECTION: {}. From the IP: {}".format(number_con, client_ip_port))
+
         # --- Step 5: Receiving information from the client
         msg_raw = cs.recv(2000)
         msg = msg_raw.decode()

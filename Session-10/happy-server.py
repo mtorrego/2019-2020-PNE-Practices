@@ -1,6 +1,6 @@
 import socket
 
-IP = "212.128.253.131"
+IP = "192.168.8.108"
 PORT = 8080
 
 # --- Step 1: creating the socket
@@ -18,6 +18,8 @@ ls.listen()
 print("Server is configured!!")
 
 while True:
+    # -- Waits for a client to connect
+    print("Waiting for Clients to connect")
 
     try:
         # --- Step 4: Wait for clients tro connect
@@ -27,6 +29,7 @@ while True:
         ls.close()
         exit()
     else:
+        print("A client has connected to the server!")
         # --- Step 5: Receiving information from the client
         msg_raw = cs.recv(2000)
         msg = msg_raw.decode()

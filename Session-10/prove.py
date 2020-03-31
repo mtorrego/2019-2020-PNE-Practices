@@ -1,10 +1,4 @@
 from Client0 import Client
-
-PRACTICE = 2
-EXERCISE = 2
-
-print(f"-----| Practice {PRACTICE}, Exercise {EXERCISE} |------")
-
 # -- Parameters of the server to talk to
 IP = "192.168.8.108"
 PORT = 8080
@@ -13,3 +7,7 @@ PORT = 8080
 c = Client(IP, PORT)
 print(c)
 
+while True:
+    a = input("Type what do you want to write: ")
+    response = c.talk(a)
+    print(f"Response: \n{response}")
