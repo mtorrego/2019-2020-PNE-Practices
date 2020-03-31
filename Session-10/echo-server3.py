@@ -46,8 +46,6 @@ while aa:
             aa = False
         # --- Step 5: Receiving information from the client
 
-
-
         # --- Step 6: Send a response message to the client
         response = "ECHO: " + msg
         cs.send(response.encode())

@@ -39,7 +39,6 @@ while True:
         print(f" Received message: ", end="")
         termcolor.cprint(msg, "green")
 
-
         # --- Step 6: Send a response message to the client
         response = "ECHO: " + msg
         cs.send(response.encode())

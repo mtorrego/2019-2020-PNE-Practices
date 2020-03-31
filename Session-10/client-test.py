@@ -11,4 +11,3 @@ counter = 0
 while counter < 5:
     c.debug_talk(f"Message {counter}")
     counter += 1
-
