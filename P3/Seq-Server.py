@@ -1,8 +1,6 @@
 from Seq1 import *
-from Client0 import *
 import socket
 import termcolor
-from Seq0 import *
 
 IP = "127.0.0.1"
 PORT = 8080
@@ -21,6 +19,8 @@ ls.listen()
 
 print("Server is configured!!")
 
+listsequences = ["AATTCCTACTGAACACTGGATGGGTGTACA", "GTGATACTAGATCACAACTTAGTCAGTCGT", "AAACCCTATGAGCTCGAGCTGATCGACATG",
+                 "TTTACTTCGGATCACGATGCATAGTTACCA", "ACTTACGATCGTATCGACAAATCGTTTGCA"]
 FOLDER = "../Session-04/"
 list_names = ["U5", "ADA", "FRAT1", "FXN", "RNU6_269P"]
 ext = ".txt"
@@ -38,17 +38,17 @@ while aa:
     else:
         msg_raw = cs.recv(2000)
         msg = msg_raw.decode()
-        termcolor.cprint(msg, "green")
+        n = msg.find(" ")
+        command = msg[:n]
+        termcolor.cprint(command, "green")
+        sequence = msg[n + 1:]
         if msg == "PING":
             response = "OK!"
         elif "GET" in msg:
-            number = msg.find(" ")
-            chain = int(msg[number + 1:])
-            seq = list_names[chain]
-            response = seq_read_fasta(FOLDER + seq + ext)
+            chain = int(sequence)
+            seq = listsequences[chain]
+            response = seq
         elif "INFO" in msg:
-            n = msg.find(" ")
-            sequence = msg[n + 1:]
             s = Seq(sequence)
             a = s.count()
             b = s.len()
@@ -60,9 +60,19 @@ while aa:
             d = dict(zip(listkeys, listt))
 
             response = f"Sequence: {s} \nThe length is: {b} \n{d}"
-
+        elif "COMP" in msg:
+            s = Seq(sequence)
+            response = s.seq_complement()
+        elif "REV" in msg:
+            s = Seq(sequence)
+            response = s. seq_reverse()
+        elif "GENE" in msg:
+            s = Seq()
+            response = s.read_fasta(FOLDER + sequence + ext)
+        else:
+            response = "ERROR"
 
         cs.send(response.encode())
-        print(response)
+        print(response, "\n")
 
         cs.close()
