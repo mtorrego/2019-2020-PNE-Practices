@@ -9,3 +9,4 @@ for name in list_names:
     a = s.read_fasta(FOLDER + name + ext)
     sequence = Seq(a)
     print("The most common base in ", name, "is :", ex10(sequence))
+

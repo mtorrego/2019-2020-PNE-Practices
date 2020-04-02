@@ -38,15 +38,29 @@ while aa:
     else:
         msg_raw = cs.recv(2000)
         msg = msg_raw.decode()
-        termcolor.cprint(msg+" command!", "green")
+        termcolor.cprint(msg, "green")
         if msg == "PING":
             response = "OK!"
         elif "GET" in msg:
             number = msg.find(" ")
-            seq = list_names[number]
+            chain = int(msg[number + 1:])
+            seq = list_names[chain]
             response = seq_read_fasta(FOLDER + seq + ext)
         elif "INFO" in msg:
-            response = str(msg.split(" ")[1:])
+            n = msg.find(" ")
+            sequence = msg[n + 1:]
+            s = Seq(sequence)
+            a = s.count()
+            b = s.len()
+            listvalues = list(a.values())
+            listt = []
+            for value in listvalues:
+                listt.append(f"{value} {round(value/b * 100), 2}%")
+            listkeys = list(a.keys())
+            d = dict(zip(listkeys, listt))
+
+            response = f"Sequence: {s} \nThe length is: {b} \n{d}"
+
 
         cs.send(response.encode())
         print(response)
