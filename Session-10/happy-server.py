@@ -1,6 +1,6 @@
 import socket
 
-IP = "192.168.8.108"
+IP = "127.0.0.1"
 PORT = 8080
 
 # --- Step 1: creating the socket

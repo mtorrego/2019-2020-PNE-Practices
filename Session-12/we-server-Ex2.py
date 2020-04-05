@@ -38,7 +38,7 @@ def process_client(s):
         <meta charset="utf-8">
         <title>Green server</title>
       </head>
-      <body style="background-color: pink;">
+      <body style="background-color: lightgreen;">
         <h1>GREEN SERVER</h1>
         <p>I am the Green Server! :-)</p>
         <p> This is another paragraph<p>
@@ -50,7 +50,7 @@ def process_client(s):
     status_line = "HTTP/1.1 200 OK\n"
 
     # -- Add the Content-Type header
-    header = "Content-Type: text/html\n"
+    header = "Content-Type: text/plain\n"
 
     # -- Add the Content-Length
     header += f"Content-Length: {len(body)}\n"
