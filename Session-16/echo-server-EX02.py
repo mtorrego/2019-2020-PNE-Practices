@@ -25,12 +25,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Open the form1.html file
         # Read the index from the file
         if self.path == "/":
-            contents = Path('form-EX01.html').read_text()
+            contents = Path('form-EX02.html').read_text()
             self.send_response(200)  # -- Status line: OK!
         elif "echo" in self.path:
             contents = Path("prove.html").read_text()
             a = self.path.find("=")
-            msg = self.path[a+1:]
+            if "chk" in self.path:
+                msg = self.path[a+1:].upper()
+                letra = msg.find("&")
+                msg = msg[:letra]
+            else:
+                msg = self.path[a+1:]
             d = contents.find("<p>")
             contents = contents[:d] + msg + contents[d:]
             self.send_response(200)
