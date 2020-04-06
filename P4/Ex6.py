@@ -31,6 +31,7 @@ def process_client(s):
 
     # -- The request line is the first
     req_line = lines[0]
+    print(req_line)
 
     print("Request line: ", end="")
     termcolor.cprint(req_line, "green")
@@ -41,7 +42,6 @@ def process_client(s):
     # header
     # blank line
     # Body (content to send)
-
     # This new contents are written in HTML language
     if "info/A" in req:
         FILENAME = "A.html"
@@ -55,7 +55,7 @@ def process_client(s):
     elif "info/T" in req:
         FILENAME = "T.html"
         body = seq_read_fasta(FOLDER + FILENAME)
-    elif "" in req_line:
+    elif " / HTTP" in req_line:
         body = seq_read_fasta(FOLDER + EMPTYFIL)
     else:
         body = seq_read_fasta(FOLDER + ERROR)
