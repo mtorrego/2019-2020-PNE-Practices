@@ -2,6 +2,7 @@ import http.server
 import socketserver
 import termcolor
 from pathlib import Path
+from Seq0 import *
 
 # Define the Server's port
 PORT = 8080
@@ -9,6 +10,35 @@ PORT = 8080
 
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
+
+
+def html_folder(title, h1, body):
+    default_body = f"""
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{title}</title>
+  </head>
+  <body style="background-color: white;">
+    <h1>{h1}</h1>
+    <p><textarea rows = "20" cols= "100">{body}</textarea>
+    
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+"""
+
+    return default_body
+
+
+listsequences = ["AATTCCTACTGAACACTGGATGGGTGTACA", "GTGATACTAGATCACAACTTAGTCAGTCGT", "AAACCCTATGAGCTCGAGCTGATCGACATG",
+                 "TTTACTTCGGATCACGATGCATAGTTACCA", "ACTTACGATCGTATCGACAAATCGTTTGCA"]
+
+FOLDER = "../Session-04/"
+list_names = ["U5", "ADA", "FRAT1", "FXN", "RNU6_269P"]
+ext = ".txt"
 
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
@@ -25,15 +55,28 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Open the form1.html file
         # Read the index from the file
         if self.path == "/":
-            contents = Path('form-EX01.html').read_text()
-            self.send_response(200)  # -- Status line: OK!
-        elif "echo" in self.path:
-            contents = Path("prove.html").read_text()
-            a = self.path.find("=")
-            msg = self.path[a+1:]
-            d = contents.find("<p>")
-            contents = contents[:d] + msg + contents[d:]
+            contents = Path("form-3.html").read_text()
             self.send_response(200)
+        elif "/ping" in self.path:
+            h1 = "PING OK"
+            body = "The sequence is running"
+            contents = html_folder("PING", h1, body)
+            self.send_response(200)
+        elif "/get" in self.path:
+            a = self.path.find("=")
+            number = int(self.path[a + 1:])
+            seq = listsequences[number]
+            h1 = "Sequence number " + str(number)
+            contents = html_folder("GET", h1, seq)
+            self.send_response(200)
+        elif "/gene" in self.path:
+            a = self.path.find("=")
+            name = self.path[a + 1:]
+            seq = seq_read_fasta(FOLDER + name + ext)
+            h1 = "Gene " + name
+            contents = html_folder("GENE", h1, seq)
+            self.send_response(200)
+
         else:
             contents = Path("Error.html").read_text()
             self.send_response(404)
