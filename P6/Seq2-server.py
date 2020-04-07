@@ -13,7 +13,7 @@ socketserver.TCPServer.allow_reuse_address = True
 
 
 def html_folder(title, h1, body):
-    default_body = f"""
+    main_message = f"""
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -30,7 +30,33 @@ def html_folder(title, h1, body):
 </html>
 """
 
-    return default_body
+    return main_message
+
+
+def ex4(sequence, info, result):
+    main_message = f"""
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>OPERATION</title>
+  </head>
+  <body style="background-color: white;">
+    <h1>Sequence</h1>
+    <p><textarea rows = "20" cols= "100">{sequence}</textarea></p>
+    <hr>
+    <h2>Operation</h2>
+    <p>{info}</p>
+    <hr>
+    <h3>Result</h3>
+    <p>{result}</p>
+    <hr>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+"""
+
+    return main_message
 
 
 listsequences = ["AATTCCTACTGAACACTGGATGGGTGTACA", "GTGATACTAGATCACAACTTAGTCAGTCGT", "AAACCCTATGAGCTCGAGCTGATCGACATG",
