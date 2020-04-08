@@ -3,6 +3,7 @@ import socketserver
 import termcolor
 from pathlib import Path
 from Seq0 import *
+from Seq1 import *
 
 # Define the Server's port
 PORT = 8080
@@ -43,13 +44,13 @@ def ex4(sequence, info, result):
   </head>
   <body style="background-color: white;">
     <h1>Sequence</h1>
-    <p><textarea rows = "20" cols= "100">{sequence}</textarea></p>
+    <p><textarea rows = "5" cols= "100">{sequence}</textarea></p>
     <hr>
     <h2>Operation</h2>
     <p>{info}</p>
     <hr>
     <h3>Result</h3>
-    <p>{result}</p>
+    <p><textarea rows = "6" cols= "100">{result}</textarea></p>
     <hr>
     <a href="http://127.0.0.1:8080/">Main Page </a>
   </body>
@@ -81,7 +82,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Open the form1.html file
         # Read the index from the file
         if self.path == "/":
-            contents = Path("form-3.html").read_text()
+            contents = Path("form-4.html").read_text()
             self.send_response(200)
         elif "/ping" in self.path:
             h1 = "PING OK"
@@ -102,7 +103,33 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             h1 = "Gene " + name
             contents = html_folder("GENE", h1, seq)
             self.send_response(200)
-
+        elif "/operation" in self.path:
+            a = self.path.find("=")
+            b = self.path.find("&")
+            seq = self.path[a + 1: b]
+            s = Seq(seq)
+            if "INFO" in self.path:
+                a = s.count()
+                b = s.len()
+                listvalues = list(a.values())
+                listt = []
+                for value in listvalues:
+                    listt.append(f"{value} {round(value / b * 100), 2}%")
+                listkeys = list(a.keys())
+                d = dict(zip(listkeys, listt))
+                sol = ""
+                for n in listkeys:
+                    a = listkeys.index(n)
+                    sol = sol + "\n" + str(listkeys[a]) + " = " + str(listt[a])
+                response = f"The length is: {b} \n{sol}"
+                contents = ex4(seq, "INFO", response)
+            elif "COMP" in self.path:
+                res = s.seq_complement()
+                contents = ex4(seq, "COMP", res)
+            elif "REV" in self.path:
+                res = s.seq_reverse()
+                contents = ex4(seq, "REV", res)
+            self.send_response(200)
         else:
             contents = Path("Error.html").read_text()
             self.send_response(404)

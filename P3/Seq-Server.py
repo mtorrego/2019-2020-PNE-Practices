@@ -58,8 +58,12 @@ while aa:
                 listt.append(f"{value} {round(value/b * 100), 2}%")
             listkeys = list(a.keys())
             d = dict(zip(listkeys, listt))
+            sol = ""
+            for n in listkeys:
+                a = listkeys.index(n)
+                sol = sol + "\n" + str(listkeys[a]) + " = " + str(listt[a])
 
-            response = f"Sequence: {s} \nThe length is: {b} \n{d}"
+            response = f"Sequence: {s} \nThe length is: {b} \n{sol}"
         elif "COMP" in msg:
             s = Seq(sequence)
             response = s.seq_complement()
