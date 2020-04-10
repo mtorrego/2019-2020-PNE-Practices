@@ -1,7 +1,6 @@
 import http.server
 import socketserver
 import termcolor
-from pathlib import Path
 from Seq0 import *
 from Seq1 import *
 
