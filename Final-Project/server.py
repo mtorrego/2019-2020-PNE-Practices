@@ -14,7 +14,7 @@ server = "https://rest.ensembl.org"
 socketserver.TCPServer.allow_reuse_address = True
 
 
-def html_folder(title, body):
+def html_folder(title):
     main_message = f"""
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -22,19 +22,22 @@ def html_folder(title, body):
     <meta charset="utf-8">
     <title>{title}</title>
   </head>
-  <body style="background-color: white;">
-    <p><textarea rows = "20" cols= "100">{body}</textarea>
-
-    </p>
-    <a href="http://127.0.0.1:8080/">Main Page </a>
-  </body>
-</html>
-"""
+  <body style="background-color: lightblue;">
+    <h1>List of species</h1>
+    <p><textarea rows = "20" cols= "100">"""
 
     return main_message
 
 
-def info_species(serv,number):
+final_message = f"""
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html> """
+
+
+def info_species(serv):
     ext = "/info/species?"
 
     r = requests.get(serv + ext, headers={"Content-Type": "application/json"})
@@ -46,13 +49,15 @@ def info_species(serv,number):
     decoded = r.json()
     # print(repr(decoded["species"][-1]["common_name"]))
     a = list(decoded["species"])
-    counter = 0
+    return a
+    #counter = 0
     list_animals = []
-    while counter <= number:
-        animal = a[counter]["common_name"]
-        list_animals.append(animal)
-        counter += 1
-    return list_animals
+    #while counter < number:
+        #animal = a[counter]["common_name"]
+        #print(animal)
+        #list_animals.append(animal)
+        #counter += 1
+    #return list_animals
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
@@ -77,9 +82,22 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             error_code = 200
         elif resource == "/listSpecies":
             tittle = "LIST OF SPECIES IN THE BROWSER"
-            #body = info_species(server)
-            a = info_species(server, 20)
-            contents = html_folder(tittle, a)
+            index_eq = self.path.find("=")
+            number = int(self.path[index_eq + 1:])
+            #a = info_species(server, number)
+            contents_in = html_folder(tittle)
+            print(contents_in)
+            counter = 0
+            a = info_species(server)
+            contents_in += "There are a total of " + str(len(a)) + " species in the database" + "\n"
+            contents_in += "You have selectioned a number of: " + str(number) + "species" \
+                           + "\n" + "The name of the species are: " + "\n" + "\n"
+            while counter < number:
+                animal = a[counter]["common_name"]
+                contents_in = contents_in + " ·" + animal + "\n"
+                counter += 1
+            contents = contents_in + final_message
+            print(contents)
             content_type = 'text/html'
             error_code = 200
         elif resource == "/karyotype":
