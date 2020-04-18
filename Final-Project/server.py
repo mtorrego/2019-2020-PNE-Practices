@@ -24,7 +24,7 @@ def html_folder(title):
   </head>
   <body style="background-color: lightblue;">
     <h1>List of species</h1>
-    <p><textarea rows = "20" cols= "100">"""
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">"""
 
     return main_message
 
@@ -51,7 +51,7 @@ def info_species(serv):
     a = list(decoded["species"])
     return a
     #counter = 0
-    list_animals = []
+    #list_animals = []
     #while counter < number:
         #animal = a[counter]["common_name"]
         #print(animal)
@@ -59,6 +59,20 @@ def info_species(serv):
         #counter += 1
     #return list_animals
 
+
+def info_assembly(serv, specie):
+    ext = "/info/assembly/" + specie + "?"
+
+    r = requests.get(serv + ext, headers={"Content-Type": "application/json"})
+
+    if not r.ok:
+        r.raise_for_status()
+        sys.exit()
+
+    decoded = r.json()
+    # print(repr(decoded))
+    a = list(decoded["karyotype"])
+    return a
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
 
@@ -83,27 +97,49 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif resource == "/listSpecies":
             tittle = "LIST OF SPECIES IN THE BROWSER"
             index_eq = self.path.find("=")
-            number = int(self.path[index_eq + 1:])
+            msg = self.path[index_eq + 1:]
             #a = info_species(server, number)
             contents_in = html_folder(tittle)
-            print(contents_in)
-            counter = 0
             a = info_species(server)
-            contents_in += "There are a total of " + str(len(a)) + " species in the database" + "\n"
-            contents_in += "You have selectioned a number of: " + str(number) + "species" \
-                           + "\n" + "The name of the species are: " + "\n" + "\n"
-            while counter < number:
+            total_number = len(a)
+            contents_in += "There are a total of " + str(total_number) + " species in the database" + "\n"
+            counter = 0
+            if msg == "":
+                number = total_number
+            else:
+                number = msg
+            contents_in += "You have selectioned a number of: " + str(number) + " species" \
+                            + "\n" + "The name of the species are: " + "\n" + "\n"
+            while counter < int(number):
                 animal = a[counter]["common_name"]
                 contents_in = contents_in + " ·" + animal + "\n"
                 counter += 1
+
+            #print(contents_in)
+            #else:
+             #   contents_in += "You have selectioned a number of: " + str(number) + " species" \
+              #                  + "\n" + "The name of the species are: " + "\n" + "\n"
+               # while counter < int(number):
+                #    animal = a[counter]["common_name"]
+                 #   contents_in = contents_in + " ·" + animal + "\n"
+                  #  counter += 1
             contents = contents_in + final_message
-            print(contents)
+            #print(contents)
             content_type = 'text/html'
             error_code = 200
         elif resource == "/karyotype":
-            tittle = "KARYOTIPE OF A SPECIFIC SPECIE"
-            body = "ee"
-            contents = html_folder(tittle, body)
+            tittle = "KARYOTYPE OF A SPECIFIC SPECIE"
+            index_eq = self.path.find("=")
+            msg = self.path[index_eq + 1:]
+            if msg in info_species(server):
+                contents_in = html_folder(tittle)
+                a = info_assembly(server, msg)
+                contents_in += "The names of the chromosomes are: " + "\n"
+                for chrom in a:
+                    contents_in += " ·" + chrom + "\n"
+                contents = contents_in + final_message
+            else:
+                contents = Path("Error.html").read_text()
             content_type = 'text/html'
             error_code = 200
         elif resource == "/chromosomeLength":

@@ -1,7 +1,7 @@
 import requests, sys
 
 server = "http://rest.ensembl.org"
-ext = "/info/assembly/homo_sapiens?"
+ext = "/info/assembly/?"
 
 r = requests.get(server + ext, headers={"Content-Type": "application/json"})
 
