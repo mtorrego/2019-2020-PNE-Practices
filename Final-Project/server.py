@@ -131,7 +131,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             tittle = "KARYOTYPE OF A SPECIFIC SPECIE"
             index_eq = self.path.find("=")
             msg = self.path[index_eq + 1:]
-            if msg in info_species(server):
+            a = info_species(server)
+            counter = 0
+            list_species = []
+            while counter < int(len(a)):
+                animal = a[counter]["common_name"]
+                list_species.append(animal)
+                counter += 1
+            if msg in list_species:
                 contents_in = html_folder(tittle)
                 a = info_assembly(server, msg)
                 contents_in += "The names of the chromosomes are: " + "\n"

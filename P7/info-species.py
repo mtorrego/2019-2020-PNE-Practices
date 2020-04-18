@@ -13,10 +13,11 @@ def info_species():
     decoded = r.json()
     # print(repr(decoded["species"][-1]["common_name"]))
     a = list(decoded["species"])
-    counter = 0
-    for n in a:
-        print(a[counter]["common_name"])
-        counter += 1
+    return a
+    #counter = 0
+    #for n in a:
+     #   print(a[counter]["common_name"])
+      #  counter += 1
 
 
 info_species()
