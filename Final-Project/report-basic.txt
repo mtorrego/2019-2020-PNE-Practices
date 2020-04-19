@@ -1,0 +1,436 @@
+Test report example
+====================
+
+---> listSpecies endpoint
+
+TEST 1 - EXERCISE 1 FINISHED - WITH LIMIT = 4
+
+*Input:
+http://127.0.0.1:8080/listSpecies?limit=4
+
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LIST OF SPECIES IN THE BROWSER</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>List of species</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">There are a total of 267 species in the database
+You have selectioned a number of: 4 species
+The name of the species are:
+
+ ·sailfin molly
+ ·Japanese medaka HSOK
+ ·Black snub-nosed monkey
+ ·Golden Hamster
+
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+
+TEST 2 - EXERCISE 1 FINISHED - WITH NO LIMIT
+
+*Input:
+http://127.0.0.1:8080/listSpecies?limit=
+
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LIST OF SPECIES IN THE BROWSER</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>List of species</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">There are a total of 267 species in the database
+You have selectioned a number of: 267 species
+The name of the species are:
+
+ ·cape rock hyrax
+ ·White-headed capuchin
+ ·Olive baboon
+ ·house mouse
+ ·platypus
+ ·tiger tail seahorse
+ ·blind barbel
+ ·Great Tit
+ ·orange clownfish
+ ·donkey
+ ·Shrew mouse
+ ·Arctic ground squirrel
+ ·house mouse
+ ·pig
+ ·Agassiz's desert tortoise
+ ·Lesser Egyptian jerboa
+ ·blue-crowned manakin
+ ·vole
+ ·yellowtail amberjack
+ ·three-spined stickleback
+ ·Australian saltwater crocodile
+ ·C.elegans
+ ·pig
+ ·Golden Hamster
+ ·Periophthalmus magnuspinnatus
+ ·emu
+ ·Midas cichlid
+ ·Daurian ground squirrel
+ ·Degu
+ ·Japanese medaka HSOK
+ ·Chinese softshell turtle
+ ·alpaca
+ ·western European hedgehog
+ ·house mouse
+ ·Japanese medaka HdrR
+ ·lyretail cichlid
+ ·eastern happy
+ ·Indian peafowl
+ ·gray short-tailed opossum
+ ·Pig-tailed macaque
+ ·pig
+ ·pig
+ ·horse
+ ·Coquerel's sifaka
+ ·greater bamboo lemur
+ ·Ryukyu mouse
+ ·pig
+ ·domestic yak
+ ·bottlenosed dolphin
+ ·human
+ ·gelada
+ ·Arabian camel
+ ·fugu
+ ·Norway rat
+ ·fruit fly
+ ·little spotted kiwi
+ ·Hoffmann's two-fingered sloth
+ ·white-throated sparrow
+ ·Mexican tetra
+ ·Makobe Island cichlid
+ ·domestic cat
+ ·Chacoan peccary
+ ·nine-banded armadillo
+ ·zebrafish
+ ·Spotted gar
+ ·south eastern house mouse
+ ·American beaver
+ ·golden-line barbel
+ ·Atlantic cod
+ ·swamp eel
+ ·ocean sunfish
+ ·red-bellied piranha
+ ·house mouse
+ ·thirteen-lined ground squirrel
+ ·blunt-snouted clingfish
+ ·white-tufted-ear marmoset
+ ·barramundi perch
+ ·American bison
+ ·golden eagle
+ ·burrowing owl
+ ·domestic guinea pig
+ ·greater amberjack
+ ·pig
+ ·Western Lowland Gorilla
+ ·chimpanzee
+ ·Sea squirt Ciona intestinalis
+ ·common carp huanghe
+ ·jewelled blenny
+ ·Sea squirt Ciona savignyi
+ ·pig
+ ·Indian glassy fish
+ ·northern tree shrew
+ ·electric eel
+ ·mummichog
+ ·naked mole-rat
+ ·blue tilapia
+ ·Nile tilapia
+ ·tuatara
+ ·Mongolian gerbil
+ ·dog
+ ·greater horseshoe bat
+ ·Crab-eating macaque
+ ·rabbit
+ ·sailfin molly
+ ·Pachon cavefish
+ ·pinecone soldierfish
+ ·Atlantic herring
+ ·tammar wallaby
+ ·Bengalese finch
+ ·Alpine marmot
+ ·golden pheasant
+ ·house mouse
+ ·koala
+ ·African ostrich
+ ·Paramormyrops kingsleyae
+ ·sperm whale
+ ·mainland tiger snake
+ ·southern platyfish
+ ·meerkat
+ ·pig
+ ·common wombat
+ ·Tiger
+ ·tongue sole
+ ·Komodo dragon
+ ·ruff
+ ·Spoon-billed sandpiper
+ ·cattle
+ ·swan goose
+ ·Western painted turtle
+ ·Inshore hagfish
+ ·Brazilian guinea pig
+ ·house mouse
+ ·Philippine tarsier
+ ·helmeted guineafowl
+ ·chicken
+ ·bonobo
+ ·Burton's mouthbrooder
+ ·leopard
+ ·Polar bear
+ ·coelacanth
+ ·Atlantic salmon
+ ·golden-collared manakin
+ ·Collared flycatcher
+ ·eastern european house mouse
+ ·river trout
+ ·Long-tailed chinchilla
+ ·small-eared galago
+ ·Upper Galilee mountains blind mole rat
+ ·yellow-billed parrot
+ ·Gouldian finch
+ ·Indian medaka
+ ·steppe mouse
+ ·Ma's night monkey
+ ·common wall lizard
+ ·guppy
+ ·Kakapo
+ ·birds
+ ·horned golden-line barbel
+ ·hybrid cattle
+ ·Ord's kangaroo rat
+ ·common carp german mirror
+ ·western european house mouse
+ ·Domestic ferret
+ ·house mouse
+ ·Bolivian squirrel monkey
+ ·channel bull blenny
+ ·Asian bonytongue
+ ·domestic turkey
+ ·Eurasian sparrowhawk
+ ·central bearded dragon
+ ·Northern white-cheeked gibbon
+ ·American black bear
+ ·common carp hebao red
+ ·red fox
+ ·Chinese hamster
+ ·Golden snub-nosed monkey
+ ·gilthead seabream
+ ·elephant shark
+ ·turbot
+ ·Bornean orangutan
+ ·Japanese medaka HNI
+ ·house mouse
+ ·green anole
+ ·Japanese quail
+ ·Great spotted kiwi
+ ·Chinese hamster
+ ·denticle herring
+ ·dog
+ ·Abingdon island giant tortoise
+ ·European shrew
+ ·African savanna elephant
+ ·ballan wrasse
+ ·Amazon molly
+ ·house mouse
+ ·dog
+ ·live sharksucker
+ ·shortfin molly
+ ·large flying fox
+ ·Canada lynx
+ ·round goby
+ ·hybrid cattle
+ ·house mouse
+ ·spiny chromis
+ ·African green monkey
+ ·large yellow croaker
+ ·zig-zag eel
+ ·Black snub-nosed monkey
+ ·American pika
+ ·naked mole-rat
+ ·gray mouse lemur
+ ·Budgie
+ ·Angola colobus
+ ·Okarito brown kiwi
+ ·Drill
+ ·sheepshead minnow
+ ·little brown bat
+ ·Siberian musk deer
+ ·small Madagascar hedgehog
+ ·Damara mole rat
+ ·northern pike
+ ·mangrove rivulus
+ ·Domestic sheep
+ ·climbing perch
+ ·Sooty mangabey
+ ·pig
+ ·common canary
+ ·spotted green pufferfish
+ ·pig
+ ·house mouse
+ ·sea lamprey
+ ·pig
+ ·bicolor damselfish
+ ·common mallard
+ ·pig
+ ·Three-toed box turtle
+ ·pig
+ ·western mosquitofish
+ ·eastern brown snake
+ ·zebra finch
+ ·Siamese fighting fish
+ ·baker's yeast
+ ·clown anemonefish
+ ·dingo
+ ·reedfish
+ ·dark-eyed junco
+ ·giant panda
+ ·Northern American deer mouse
+ ·channel catfish
+ ·pink-footed goose
+ ·Chinese hamster
+ ·algerian mouse
+ ·Ring-necked pheasant
+ ·wild yak
+ ·tropical clawed frog
+ ·American mink
+ ·Goat
+ ·Monterrey platyfish
+ ·Argentine black and white tegu
+ ·huchen
+ ·house mouse
+ ·orbiculate cardinalfish
+ ·house mouse
+ ·Ugandan red Colobus
+ ·Tasmanian devil
+ ·Macaque
+ ·blue tit
+ ·zebra mbuna
+
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+
+
+TEST 3 - EXERCISE 2 FINISHED - CORRECT SPECIE
+
+*Input:
+http://127.0.0.1:8080/karyotype?specie=pig
+
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KARYOTYPE OF A SPECIFIC SPECIE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>List of species</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">The names of the chromosomes are:
+ ·1
+ ·2
+ ·3
+ ·4
+ ·5
+ ·6
+ ·7
+ ·8
+ ·9
+ ·10
+ ·11
+ ·12
+ ·13
+ ·14
+ ·15
+ ·16
+ ·17
+ ·18
+ ·X
+ ·Y
+ ·MT
+
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+
+
+TEST 4 - EXERCISE 2 FINISHED - CORRECT SPECIE II
+
+*Input:
+http://127.0.0.1:8080/karyotype?specie=pig
+
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KARYOTYPE OF A SPECIFIC SPECIE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>Karyotype of a specie</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">The names of the chromosomes of the specie: pig are:
+
+ ·1
+ ·2
+ ·3
+ ·4
+ ·5
+ ·6
+ ·7
+ ·8
+ ·9
+ ·10
+ ·11
+ ·12
+ ·13
+ ·14
+ ·15
+ ·16
+ ·17
+ ·18
+ ·X
+ ·Y
+ ·MT
+
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+
+
+
+TEST 5 - EXERCISE 2 FINISHED - WRONG SPECIE - ERROR FILE
+
+*Input:
+http://127.0.0.1:8080/karyotype?specie=coronavirus
+*Output:
+<!DOCTYPE html>
+    <html lang="en" dir="ltr">
+      <head>
+        <meta charset="utf-8">
+        <title>ERROR</title>
+      </head>
+      <body style="background-color: red;">
+        <h1>ERROR</h1>
+        <p>This page appears because you are writing something that is not correct</p>
+        <br>
+        <p>Please try again</p>
+        <a href="http://127.0.0.1:8080/">Main page</a>
+      </body>
+    </html>

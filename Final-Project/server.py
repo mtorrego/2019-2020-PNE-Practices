@@ -14,7 +14,7 @@ server = "https://rest.ensembl.org"
 socketserver.TCPServer.allow_reuse_address = True
 
 
-def html_folder(title):
+def html_folder(title, subtittle):
     main_message = f"""
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -23,7 +23,7 @@ def html_folder(title):
     <title>{title}</title>
   </head>
   <body style="background-color: lightblue;">
-    <h1>List of species</h1>
+    <h1>{subtittle}</h1>
     <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">"""
 
     return main_message
@@ -96,10 +96,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             error_code = 200
         elif resource == "/listSpecies":
             tittle = "LIST OF SPECIES IN THE BROWSER"
+            subtittle = "List of species"
             index_eq = self.path.find("=")
             msg = self.path[index_eq + 1:]
             #a = info_species(server, number)
-            contents_in = html_folder(tittle)
+            contents_in = html_folder(tittle, subtittle)
             a = info_species(server)
             total_number = len(a)
             contents_in += "There are a total of " + str(total_number) + " species in the database" + "\n"
@@ -129,6 +130,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             error_code = 200
         elif resource == "/karyotype":
             tittle = "KARYOTYPE OF A SPECIFIC SPECIE"
+            subtittle = "Karyotype of a specie"
             index_eq = self.path.find("=")
             msg = self.path[index_eq + 1:]
             a = info_species(server)
@@ -139,9 +141,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 list_species.append(animal)
                 counter += 1
             if msg in list_species:
-                contents_in = html_folder(tittle)
+                contents_in = html_folder(tittle, subtittle)
                 a = info_assembly(server, msg)
-                contents_in += "The names of the chromosomes are: " + "\n"
+                contents_in += "The names of the chromosomes of the specie: " + str(msg) + " are: " + "\n\n"
                 for chrom in a:
                     contents_in += " ·" + chrom + "\n"
                 contents = contents_in + final_message
@@ -160,6 +162,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             content_type = 'text/html'
             error_code = 404
 
+        print(contents)
         self.send_response(error_code)
         # Define the content-type header:
         self.send_header('Content-Type', content_type)
