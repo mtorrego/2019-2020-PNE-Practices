@@ -3,7 +3,8 @@ import socketserver
 import termcolor
 from Seq1 import *
 import http.client
-import requests, sys
+import requests
+import sys
 
 # Define the Server's port
 PORT = 8080
@@ -14,7 +15,7 @@ server = "https://rest.ensembl.org"
 socketserver.TCPServer.allow_reuse_address = True
 
 
-def html_folder(title, subtittle):
+def html_folder(title, sub_tittle):
     main_message = f"""
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -23,7 +24,7 @@ def html_folder(title, subtittle):
     <title>{title}</title>
   </head>
   <body style="background-color: lightblue;">
-    <h1>{subtittle}</h1>
+    <h1>{sub_tittle}</h1>
     <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">"""
 
     return main_message
@@ -37,10 +38,10 @@ final_message = f"""
 </html> """
 
 
-def info_species(serv):
+def info_species(server1):
     ext = "/info/species?"
 
-    r = requests.get(serv + ext, headers={"Content-Type": "application/json"})
+    r = requests.get(server1 + ext, headers={"Content-Type": "application/json"})
 
     if not r.ok:
         r.raise_for_status()
@@ -50,20 +51,12 @@ def info_species(serv):
     # print(repr(decoded["species"][-1]["common_name"]))
     a = list(decoded["species"])
     return a
-    #counter = 0
-    #list_animals = []
-    #while counter < number:
-        #animal = a[counter]["common_name"]
-        #print(animal)
-        #list_animals.append(animal)
-        #counter += 1
-    #return list_animals
 
 
-def info_assembly(serv, specie):
+def info_assembly(server1, specie):
     ext = "/info/assembly/" + specie + "?"
 
-    r = requests.get(serv + ext, headers={"Content-Type": "application/json"})
+    r = requests.get(server1 + ext, headers={"Content-Type": "application/json"})
 
     if not r.ok:
         r.raise_for_status()
@@ -73,6 +66,20 @@ def info_assembly(serv, specie):
     # print(repr(decoded))
     a = list(decoded["karyotype"])
     return a
+
+
+def chromosome_length(server1, specie, number):
+    ext = "/info/assembly/" + specie + "/" + str(number) + "?"
+
+    r = requests.get(server1 + ext, headers={"Content-Type": "application/json"})
+
+    if not r.ok:
+        r.raise_for_status()
+        sys.exit()
+
+    decoded = r.json()
+    length = decoded["length"]
+    return length
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
 
@@ -90,17 +97,24 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Read the index from the file
         list_resource = self.path.split('?')
         resource = list_resource[0]
+        a = info_species(server)
+        counter = 0
+        list_species = []
+        while counter < int(len(a)):
+            animal = a[counter]["common_name"]
+            list_species.append(animal)
+            counter += 1
+
         if resource == "/":
             contents = Path("main_page.html").read_text()
             content_type = 'text/html'
             error_code = 200
         elif resource == "/listSpecies":
             tittle = "LIST OF SPECIES IN THE BROWSER"
-            subtittle = "List of species"
+            sub_tittle = "List of species"
             index_eq = self.path.find("=")
             msg = self.path[index_eq + 1:]
-            #a = info_species(server, number)
-            contents_in = html_folder(tittle, subtittle)
+            contents_in = html_folder(tittle, sub_tittle)
             a = info_species(server)
             total_number = len(a)
             contents_in += "There are a total of " + str(total_number) + " species in the database" + "\n"
@@ -115,22 +129,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 animal = a[counter]["common_name"]
                 contents_in = contents_in + " ·" + animal + "\n"
                 counter += 1
-
-            #print(contents_in)
-            #else:
-             #   contents_in += "You have selectioned a number of: " + str(number) + " species" \
-              #                  + "\n" + "The name of the species are: " + "\n" + "\n"
-               # while counter < int(number):
-                #    animal = a[counter]["common_name"]
-                 #   contents_in = contents_in + " ·" + animal + "\n"
-                  #  counter += 1
             contents = contents_in + final_message
-            #print(contents)
             content_type = 'text/html'
             error_code = 200
         elif resource == "/karyotype":
             tittle = "KARYOTYPE OF A SPECIFIC SPECIE"
-            subtittle = "Karyotype of a specie"
+            sub_tittle = "Karyotype of a specie"
             index_eq = self.path.find("=")
             msg = self.path[index_eq + 1:]
             a = info_species(server)
@@ -141,7 +145,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 list_species.append(animal)
                 counter += 1
             if msg in list_species:
-                contents_in = html_folder(tittle, subtittle)
+                contents_in = html_folder(tittle, sub_tittle)
                 a = info_assembly(server, msg)
                 contents_in += "The names of the chromosomes of the specie: " + str(msg) + " are: " + "\n\n"
                 for chrom in a:
@@ -153,8 +157,29 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             error_code = 200
         elif resource == "/chromosomeLength":
             tittle = "LENGTH OF THE SELECTED CHROMOSOME"
-            body="eeeee"
-            contents = html_folder(tittle, body)
+            sub_tittle = "Chromosome Length"
+            index_1 = self.path.find("=")
+            index_2 = self.path.find("&")
+            specie = self.path[index_1 + 1: index_2]
+
+            if specie in list_species:
+                number_1 = self.path[index_2:]
+                list_number = number_1.split("=")[1:]
+                for n in list_number:
+                    number = n
+                list_chromosome = []
+                b = info_assembly(server, specie)
+                for spec in b:
+                    list_chromosome.append(spec)
+                if number in list_chromosome:
+                    length_final = chromosome_length(server, specie, number)
+                    contents_in = html_folder(tittle, sub_tittle)
+                    contents = contents_in + "The length of the chromosome " + number + " is " \
+                                + str(length_final) + final_message
+                else:
+                    contents = Path("Error.html").read_text()
+            else:
+                contents = Path("Error.html").read_text()
             content_type = 'text/html'
             error_code = 200
         else:

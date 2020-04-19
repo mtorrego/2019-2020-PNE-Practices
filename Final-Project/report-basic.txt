@@ -434,3 +434,66 @@ http://127.0.0.1:8080/karyotype?specie=coronavirus
         <a href="http://127.0.0.1:8080/">Main page</a>
       </body>
     </html>
+
+
+TEST 6 - EXERCISE 3 inited - FIXED CHROMOSOME
+
+*Input:
+http://127.0.0.1:8080/chromosomeLength?specie=human&chromo=12
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LENGTH OF THE SELECTED CHROMOSOME</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>Chromosome Length</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">242193529
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+
+
+TEST 7 - EXERCISE 3 finished - the number works exchanging it from the list
+
+*Input:
+http://127.0.0.1:8080/chromosomeLength?specie=human&chromo=12
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LENGTH OF THE SELECTED CHROMOSOME</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>Chromosome Length</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">The length of the chromosome 12 is 133275309
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+
+
+TEST 8 - EXERCISE 3 finished? - I prove with another animal and chromosome
+
+*Input:
+http://127.0.0.1:8080/chromosomeLength?specie=mouse&chromo=2
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LENGTH OF THE SELECTED CHROMOSOME</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>Chromosome Length</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">The length of the chromosome 2 is 182113224
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>

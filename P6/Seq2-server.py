@@ -115,7 +115,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 for value in listvalues:
                     listt.append(f"{value} {round(value / b * 100), 2}%")
                 listkeys = list(a.keys())
-                d = dict(zip(listkeys, listt))
                 sol = ""
                 for n in listkeys:
                     a = listkeys.index(n)
