@@ -91,6 +91,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         in the HTTP protocol request"""
 
         # Print the request line
+        global contents
         termcolor.cprint(self.requestline, 'green')
 
         # Open the form1.html file
@@ -178,6 +179,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                 + str(length_final) + final_message
                 else:
                     contents = Path("Error.html").read_text()
+            elif resource == "/geneSeq":
+                tittle = "SEQUENCE OF A GENE"
+                sub_tittle = "The sequence of a human gene"
+                
+
             else:
                 contents = Path("Error.html").read_text()
             content_type = 'text/html'
