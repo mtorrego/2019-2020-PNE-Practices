@@ -5,6 +5,7 @@ from Seq1 import *
 import http.client
 import requests
 import sys
+import json
 
 # Define the Server's port
 PORT = 8080
@@ -80,6 +81,40 @@ def chromosome_length(server1, specie, number):
     decoded = r.json()
     length = decoded["length"]
     return length
+
+
+def gene_seq(gene):
+    ext = "/xrefs/symbol/homo_sapiens/" + gene + "?"
+
+    r = requests.get(server + ext, headers={"Content-Type": "application/json"})
+
+    if not r.ok:
+        r.raise_for_status()
+        sys.exit()
+
+    decoded = r.json()
+    id_gene = decoded[0]["id"]
+    return id_gene
+
+
+def get_sequence(id_gene):
+    server4 = "rest.ensembl.org"
+    endpoint = "/sequence/id"
+    params = "/" + id_gene + "?content-type=application/json"
+    conn = http.client.HTTPConnection(server4)
+
+    try:
+        conn.request("GET", endpoint + params)
+    except ConnectionRefusedError:
+        print("ERROR! Cannot connect to the Server")
+        exit()
+    response = conn.getresponse()
+    data1 = response.read().decode("utf-8")
+    data = json.loads(data1)
+    seq = data["seq"]
+    return seq
+
+
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
 
@@ -127,11 +162,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 number = msg
             contents_in += "You have selectioned a number of: " + str(number) + " species" \
                             + "\n" + "The name of the species are: " + "\n" + "\n"
-            while counter < int(number):
-                animal = a[counter]["common_name"]
-                contents_in = contents_in + " ·" + animal + "\n"
-                counter += 1
-            contents = contents_in + final_message
+            if 0 < int(number) <= int(total_number):
+                while counter < int(number):
+                    animal = a[counter]["common_name"]
+                    contents_in = contents_in + " ·" + animal + "\n"
+                    counter += 1
+                contents = contents_in + final_message
+            else:
+                contents = Path("Error.html").read_text()
             content_type = 'text/html'
             error_code = 200
         elif resource == "/karyotype":
@@ -180,20 +218,46 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                 + str(length_final) + final_message
                 else:
                     contents = Path("Error.html").read_text()
-            elif resource == "/geneSeq":
-                tittle = "SEQUENCE OF A GENE"
-                sub_tittle = "The sequence of a human gene"
-                
-
             else:
                 contents = Path("Error.html").read_text()
             content_type = 'text/html'
             error_code = 200
+        elif resource == "/geneSeq":
+            try:
+                tittle = "SEQUENCE OF A GENE"
+                sub_tittle = "The sequence of a human gene"
+                initial_index = self.path.find("=")
+                gene = self.path[initial_index + 1:]
+                id_gene = gene_seq(gene)
+                sequence = get_sequence(id_gene)
+                contents_in = html_folder(tittle, sub_tittle)
+                contents = contents_in + "The sequence of the gene " + gene + " is: " + "\n\n" + sequence + final_message
+                content_type = 'text/html'
+                error_code = 200
+            except IndexError:
+                contents = Path("Error.html").read_text()
+                content_type = 'text/html'
+                error_code = 404
+        elif resource == "/geneInfo":
+            try:
+                tittle = "INFO OF A GENE"
+                sub_tittle = "The information of a human gene"
+                contents_in = html_folder(tittle, sub_tittle)
+                initial_index = self.path.find("=")
+                gene = self.path[initial_index + 1:]
+                id_gene = gene_seq(gene)
+                content_type = 'text/html'
+                error_code = 200
+            except IndexError:
+                contents = Path("Error.html").read_text()
+                content_type = 'text/html'
+                error_code = 404
         else:
             contents = Path("Error.html").read_text()
             content_type = 'text/html'
             error_code = 404
 
+        print(resource)
         print(contents)
         self.send_response(error_code)
         # Define the content-type header:

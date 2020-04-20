@@ -1,7 +1,7 @@
 import requests, sys
 
 server = "http://rest.ensembl.org"
-ext = "/lookup/symbol/homo_sapiens/BRCA2?expand=1"
+ext = "/lookup/symbol/homo_sapiens/BRCA2?"
 
 r = requests.get(server + ext, headers={"Content-Type": "application/json"})
 
