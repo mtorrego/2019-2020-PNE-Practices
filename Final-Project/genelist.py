@@ -10,5 +10,8 @@ if not r.ok:
     sys.exit()
 
 decoded = r.json()
-print(repr(decoded))
+counter = 0
+for n in decoded:
+    print(decoded[counter]["id"])
+    counter += 1
 

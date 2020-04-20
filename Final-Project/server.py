@@ -144,10 +144,8 @@ def percentages(s):
         listt.append(f"{value} {round(value / b * 100), 2}%")
     listkeys = list(a.keys())
     d = dict(zip(listkeys, listt))
-    for n in listkeys:
-        p = listkeys.index(n)
-        termcolor.cprint(n, "blue", end="")
-        print(" -->", str(listt[p]))
+    return d
+
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
@@ -300,7 +298,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 id_gene = gene_seq(gene)
                 s = get_sequence(id_gene)
                 seq = Seq(s)
-                solution = percentages(seq)
+                dict_sol = percentages(seq)
+                a = list(dict_sol.keys())
+                b = list(dict_sol.values())
+                contents_in += "The length of the gene is: " + str(seq.len()) + "\n" + "\n"
+                for n in dict_sol.keys():
+                    p = a.index(n)
+                    contents_in += " · Base: " + str(a[p])
+                    contents_in += " -->" + str(b[p]) + "\n"
+                contents = contents_in + final_message
+                content_type = 'text/html'
+                error_code = 200
             except IndexError:
                 contents = Path("Error.html").read_text()
                 content_type = 'text/html'

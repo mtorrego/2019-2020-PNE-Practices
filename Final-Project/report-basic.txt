@@ -973,3 +973,81 @@ The length of the gene FRAT1 is: 2644
     <a href="http://127.0.0.1:8080/">Main Page </a>
   </body>
 </html>
+
+
+
+TEST 18 - inited ex 6 - I wrote something wrong with the function percentages
+
+*Input:
+http://127.0.0.1:8080/geneCalc?gene=FRAT1
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>INFO OF A GENE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>The information of a human gene</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">0 -->477 (18, 2)%1 -->799 (30, 2)%2 -->849 (32, 2)%3 -->520 (20, 2)%
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+
+
+
+
+TEST 19 - finished ex 6 - It works correctly now, wrote on a wrong way the for loop
+
+*Input:
+http://127.0.0.1:8080/geneCalc?gene=FRAT1
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>INFO OF A GENE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>The information of a human gene</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">The length of the gene is: 2645
+Base: A -->477 (18, 2)%
+Base: C -->799 (30, 2)%
+Base: G -->849 (32, 2)%
+Base: T -->520 (20, 2)%
+
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+
+
+
+TEST 20 - finished ex 6 - I have written it prettier
+
+*Input:
+http://127.0.0.1:8080/geneCalc?gene=FRAT1
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>INFO OF A GENE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>The information of a human gene</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">The length of the gene is: 2645
+
+ · Base: A -->477 (18, 2)%
+ · Base: C -->799 (30, 2)%
+ · Base: G -->849 (32, 2)%
+ · Base: T -->520 (20, 2)%
+
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
