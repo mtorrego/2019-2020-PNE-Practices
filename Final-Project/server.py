@@ -115,6 +115,23 @@ def get_sequence(id_gene):
     return seq
 
 
+def gene_info(server5, gene):
+    ext = "/lookup/symbol/homo_sapiens/" + gene + "?"
+
+    r = requests.get(server5 + ext, headers={"Content-Type": "application/json"})
+
+    if not r.ok:
+        r.raise_for_status()
+        sys.exit()
+
+    decoded = r.json()
+    start = decoded["start"]
+    end = decoded["end"]
+    chromosome = decoded["seq_region_name"]
+    return "The gene " + gene + " starts at " + str(start) + "\n" + "The gene " + gene + " ends at " + str(end) + "\n" + \
+           "The gene " + gene + " is located at " + str(chromosome) + " chromosome \n"
+
+
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
 
@@ -127,6 +144,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Print the request line
         global contents
+        global number
         termcolor.cprint(self.requestline, 'green')
 
         # Open the form1.html file
@@ -231,7 +249,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 id_gene = gene_seq(gene)
                 sequence = get_sequence(id_gene)
                 contents_in = html_folder(tittle, sub_tittle)
-                contents = contents_in + "The sequence of the gene " + gene + " is: " + "\n\n" + sequence + final_message
+                contents = contents_in + "The sequence of the gene " + gene + " is: " + "\n\n" + \
+                        + sequence + final_message
                 content_type = 'text/html'
                 error_code = 200
             except IndexError:
@@ -246,6 +265,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 initial_index = self.path.find("=")
                 gene = self.path[initial_index + 1:]
                 id_gene = gene_seq(gene)
+                contents_in += gene_info(server, gene)
+                sequence = get_sequence(id_gene)
+                len_seq = len(sequence)
+                contents_in += "The length of the gene " + gene + " is: " + str(len_seq)
+                contents = contents_in + final_message
                 content_type = 'text/html'
                 error_code = 200
             except IndexError:

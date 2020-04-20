@@ -10,4 +10,6 @@ if not r.ok:
     sys.exit()
 
 decoded = r.json()
-print(repr(decoded))
+print(decoded["start"])
+print(decoded["end"])
+print(decoded["seq_region_name"])

@@ -899,3 +899,51 @@ http://127.0.0.1:8080/geneSeq?gene=aaghfjgf
         <a href="http://127.0.0.1:8080/">Main page</a>
       </body>
     </html>
+
+
+
+TEST 14 - first prove ex 5 - correct
+
+*Input:
+http://127.0.0.1:8080/geneInfo?gene=FRAT1
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>INFO OF A GENE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>The information of a human gene</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">The gene FRAT1 starts at 97319271
+The gene FRAT1 ends at 97321915
+The gene FRAT1 is located at 10chromosome
+The length of the gene FRAT1 is: 2645
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>
+
+
+
+
+TEST 14 - second prove ex 5 - with a wrong gene
+
+*Input:
+http://127.0.0.1:8080/geneInfo?gene=rfgewrgerhg
+*Output:
+<!DOCTYPE html>
+    <html lang="en" dir="ltr">
+      <head>
+        <meta charset="utf-8">
+        <title>ERROR</title>
+      </head>
+      <body style="background-color: red;">
+        <h1>ERROR</h1>
+        <p>This page appears because you are writing something that is not correct</p>
+        <br>
+        <p>Please try again</p>
+        <a href="http://127.0.0.1:8080/">Main page</a>
+      </body>
+    </html>
