@@ -879,7 +879,7 @@ ATTCCGAACATTCTTAGCATCGCTCGCGCCGCGCCGCGCCGCCTGAGCCGAGCCGAGCCTCTGCTGCCGCCGCCGCGGCC
 
 
 
-TEST 14 - ex4 finished - I proved with a wrong gene, and i saw that it results as an IndexError, so i wrote it as an exception
+TEST 15 - ex4 finished - I proved with a wrong gene, and i saw that it results as an IndexError, so i wrote it as an exception
 because i cant create a list of all the genes as in the previous exercise to do an IF STATEMENT
 
 *Input:
@@ -902,7 +902,7 @@ http://127.0.0.1:8080/geneSeq?gene=aaghfjgf
 
 
 
-TEST 14 - first prove ex 5 - correct
+TEST 16 - first prove ex 5 - correct
 
 *Input:
 http://127.0.0.1:8080/geneInfo?gene=FRAT1
@@ -928,7 +928,7 @@ The length of the gene FRAT1 is: 2645
 
 
 
-TEST 14 - second prove ex 5 - with a wrong gene
+TEST 17 - second prove ex 5 - with a wrong gene
 
 *Input:
 http://127.0.0.1:8080/geneInfo?gene=rfgewrgerhg
@@ -947,3 +947,29 @@ http://127.0.0.1:8080/geneInfo?gene=rfgewrgerhg
         <a href="http://127.0.0.1:8080/">Main page</a>
       </body>
     </html>
+
+
+
+TEST 18 - final ex 5 - I solve the length problem by substracting the end and the start
+
+*Input:
+http://127.0.0.1:8080/geneInfo?gene=FRAT1
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>INFO OF A GENE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>The information of a human gene</h1>
+    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">The gene FRAT1 starts at 97319271
+The gene FRAT1 ends at 97321915
+The gene FRAT1 is located at 10 chromosome
+The id of the gene is: ENSG00000165879
+The length of the gene FRAT1 is: 2644
+    </textarea>
+    </p>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+  </body>
+</html>

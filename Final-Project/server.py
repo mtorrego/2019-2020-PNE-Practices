@@ -128,9 +128,26 @@ def gene_info(server5, gene):
     start = decoded["start"]
     end = decoded["end"]
     chromosome = decoded["seq_region_name"]
+    id_gene = decoded["id"]
+    length_gene = end - start
     return "The gene " + gene + " starts at " + str(start) + "\n" + "The gene " + gene + " ends at " + str(end) + "\n" + \
-           "The gene " + gene + " is located at " + str(chromosome) + " chromosome \n"
+           "The gene " + gene + " is located at " + str(chromosome) + " chromosome" + "\n" \
+           + "The id of the gene is: " + id_gene + "\n" + "The length of the gene " + gene + " is: " + str(length_gene)
 
+
+def percentages(s):
+    a = s.count()
+    b = s.len()
+    listvalues = list(a.values())
+    listt = []
+    for value in listvalues:
+        listt.append(f"{value} {round(value / b * 100), 2}%")
+    listkeys = list(a.keys())
+    d = dict(zip(listkeys, listt))
+    for n in listkeys:
+        p = listkeys.index(n)
+        termcolor.cprint(n, "blue", end="")
+        print(" -->", str(listt[p]))
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
@@ -266,9 +283,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 gene = self.path[initial_index + 1:]
                 id_gene = gene_seq(gene)
                 contents_in += gene_info(server, gene)
-                sequence = get_sequence(id_gene)
-                len_seq = len(sequence)
-                contents_in += "The length of the gene " + gene + " is: " + str(len_seq)
                 contents = contents_in + final_message
                 content_type = 'text/html'
                 error_code = 200
@@ -276,6 +290,22 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents = Path("Error.html").read_text()
                 content_type = 'text/html'
                 error_code = 404
+        elif resource == "/geneCalc":
+            try:
+                tittle = "INFO OF A GENE"
+                sub_tittle = "The information of a human gene"
+                contents_in = html_folder(tittle, sub_tittle)
+                initial_index = self.path.find("=")
+                gene = self.path[initial_index + 1:]
+                id_gene = gene_seq(gene)
+                s = get_sequence(id_gene)
+                seq = Seq(s)
+                solution = percentages(seq)
+            except IndexError:
+                contents = Path("Error.html").read_text()
+                content_type = 'text/html'
+                error_code = 404
+
         else:
             contents = Path("Error.html").read_text()
             content_type = 'text/html'
