@@ -98,6 +98,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Read the index from the file
         list_resource = self.path.split('?')
         resource = list_resource[0]
+
         a = info_species(server)
         counter = 0
         list_species = []

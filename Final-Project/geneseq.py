@@ -1,7 +1,7 @@
 import requests, sys
 
 server = "http://rest.ensembl.org"
-ext = "/info/assembly/human?"
+ext = "/xrefs/symbol/homo_sapiens/BRCA2?"
 
 r = requests.get(server + ext, headers={"Content-Type": "application/json"})
 
@@ -10,5 +10,4 @@ if not r.ok:
     sys.exit()
 
 decoded = r.json()
-print(repr(decoded))
-print(repr(decoded["karyotype"]))
+print(decoded[0]["id"])
