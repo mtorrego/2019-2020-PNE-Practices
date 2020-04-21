@@ -11,7 +11,6 @@ import json
 PORT = 8080
 server = "https://rest.ensembl.org"
 
-
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
 
@@ -172,15 +171,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         in the HTTP protocol request"""
 
         # Print the request line
-        global contents
-        global number
         termcolor.cprint(self.requestline, 'green')
 
         # Open the form1.html file
         # Read the index from the file
         list_resource = self.path.split('?')
         resource = list_resource[0]
-
         a = info_species(server)
         counter = 0
         list_species = []
@@ -194,10 +190,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             content_type = 'text/html'
             error_code = 200
         elif resource == "/listSpecies":
+            line = list_resource[1]
             tittle = "LIST OF SPECIES IN THE BROWSER"
             sub_tittle = "List of species"
-            index_eq = self.path.find("=")
-            msg = self.path[index_eq + 1:]
+            index_eq = line.find("=")
+            msg = line[index_eq + 1:]
             contents_in = html_folder(tittle, sub_tittle)
             a = info_species(server)
             total_number = len(a)
@@ -208,7 +205,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             else:
                 number = msg
             contents_in += "You have selectioned a number of: " + str(number) + " species" \
-                            + "\n" + "The name of the species are: " + "\n" + "\n"
+                           + "\n" + "The name of the species are: " + "\n" + "\n"
             if 0 < int(number) <= int(total_number):
                 while counter < int(number):
                     animal = a[counter]["common_name"]
@@ -220,10 +217,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             content_type = 'text/html'
             error_code = 200
         elif resource == "/karyotype":
+            line = list_resource[1]
             tittle = "KARYOTYPE OF A SPECIFIC SPECIE"
             sub_tittle = "Karyotype of a specie"
-            index_eq = self.path.find("=")
-            msg = self.path[index_eq + 1:]
+            index_eq = line.find("=")
+            msg = line[index_eq + 1:]
             a = info_species(server)
             counter = 0
             list_species = []
@@ -243,15 +241,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             content_type = 'text/html'
             error_code = 200
         elif resource == "/chromosomeLength":
+            line = list_resource[1]
             tittle = "LENGTH OF THE SELECTED CHROMOSOME"
             sub_tittle = "Chromosome Length"
-            index_1 = self.path.find("=")
-            index_2 = self.path.find("&")
-            specie = self.path[index_1 + 1: index_2]
+            index_1 = line.find("=")
+            index_2 = line.find("&")
+            specie = line[index_1 + 1: index_2]
 
             if specie in list_species:
-                number_1 = self.path[index_2:]
+                number_1 = line[index_2:]
                 list_number = number_1.split("=")[1:]
+                number = 0
                 for n in list_number:
                     number = n
                 list_chromosome = []
@@ -262,7 +262,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     length_final = chromosome_length(server, specie, number)
                     contents_in = html_folder(tittle, sub_tittle)
                     contents = contents_in + "The length of the chromosome " + number + " is " \
-                                + str(length_final) + final_message
+                        + str(length_final) + final_message
                 else:
                     contents = Path("Error.html").read_text()
             else:
@@ -271,15 +271,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             error_code = 200
         elif resource == "/geneSeq":
             try:
+                line = list_resource[1]
                 tittle = "SEQUENCE OF A GENE"
                 sub_tittle = "The sequence of a human gene"
-                initial_index = self.path.find("=")
-                gene = self.path[initial_index + 1:]
+                initial_index = line.find("=")
+                gene = line[initial_index + 1:]
                 id_gene = gene_seq(gene)
                 sequence = get_sequence(id_gene)
                 contents_in = html_folder(tittle, sub_tittle)
-                contents = contents_in + "The sequence of the gene " + gene + " is: " + "\n\n" + \
-                        + sequence + final_message
+                contents = contents_in + "The sequence of the gene " + gene + " is: " + "\n\n" + sequence + \
+                    final_message
                 content_type = 'text/html'
                 error_code = 200
             except IndexError:
@@ -288,12 +289,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 error_code = 404
         elif resource == "/geneInfo":
             try:
+                line = list_resource[1]
                 tittle = "INFO OF A GENE"
                 sub_tittle = "The information of a human gene"
                 contents_in = html_folder(tittle, sub_tittle)
-                initial_index = self.path.find("=")
-                gene = self.path[initial_index + 1:]
-                id_gene = gene_seq(gene)
+                initial_index = line.find("=")
+                gene = line[initial_index + 1:]
                 contents_in += gene_info(server, gene)
                 contents = contents_in + final_message
                 content_type = 'text/html'
@@ -304,11 +305,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 error_code = 404
         elif resource == "/geneCalc":
             try:
+                line = list_resource[1]
                 tittle = "INFO OF A GENE"
                 sub_tittle = "The information of a human gene"
                 contents_in = html_folder(tittle, sub_tittle)
-                initial_index = self.path.find("=")
-                gene = self.path[initial_index + 1:]
+                initial_index = line.find("=")
+                gene = line[initial_index + 1:]
                 id_gene = gene_seq(gene)
                 s = get_sequence(id_gene)
                 seq = Seq(s)
@@ -328,19 +330,28 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 content_type = 'text/html'
                 error_code = 404
         elif resource == "/geneList":
-            tittle = "LIST OF GENES IN A RANGE"
-            sub_tittle = "All the genes in a specific range"
-            contents_in = html_folder(tittle, sub_tittle)
-            index_1 = self.path.find("=")
-            index_2 = self.path.find("&")
-            chromosome = self.path[index_1 + 1: index_2]
-            function = gene_list(server, chromosome, start, end)
-            counter = 0
-            for n in function:
-                print(function[counter]["id"])
-                counter += 1
-            content_type = 'text/html'
-            error_code = 200
+            try:
+                line = list_resource[1]
+                tittle = "LIST OF GENES IN A RANGE"
+                sub_tittle = "All the genes in a specific range"
+                contents_in = html_folder(tittle, sub_tittle)
+                list_ = line.split("=")
+                a = list_[1].find("&")
+                chromosome = list_[1][:a]
+                b = list_[2].find("&")
+                start = list_[2][:b]
+                end = list_[3]
+                function = gene_list(server, chromosome, start, end)
+                for n in function:
+                    index = function.index(n)
+                    contents_in += "Gene: " + function[index]["id"] + "\n"
+                contents = contents_in + final_message
+                content_type = 'text/html'
+                error_code = 200
+            except requests.exceptions.HTTPError:
+                contents = Path("Error.html").read_text()
+                content_type = 'text/html'
+                error_code = 404
 
         else:
             contents = Path("Error.html").read_text()
@@ -362,6 +373,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         return
 
+
 # ------------------------
 # - Server MAIN program
 # ------------------------
@@ -372,7 +384,6 @@ Handler = TestHandler
 
 # -- Open the socket server
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
-
     print("Serving at PORT", PORT)
 
     # -- Main loop: Attend the client. Whenever there is a new

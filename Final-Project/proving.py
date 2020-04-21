@@ -12,11 +12,8 @@ print(start)
 
 listt = a.split("=")
 print(listt)
-x = ""
-for n in listt:
-    a = listt.index(n)
-    for word in n:
-        word = int(word)
-        if word == int:
-            x += str(word)
-            print(x)
+a = listt[1].find("&")
+print(listt[1][:a])
+b = listt[2].find("&")
+print(listt[2][:b])
+print(listt[3])
