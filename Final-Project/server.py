@@ -69,8 +69,8 @@ def info_assembly(server1, specie):
     return a
 
 
-def chromosome_length(server1, specie, number):
-    ext = "/info/assembly/" + specie + "/" + str(number) + "?"
+def chromosome_length(server1, specie, number1):
+    ext = "/info/assembly/" + specie + "/" + str(number1) + "?"
 
     r = requests.get(server1 + ext, headers={"Content-Type": "application/json"})
 
@@ -130,8 +130,8 @@ def gene_info(server5, gene):
     chromosome = decoded["seq_region_name"]
     id_gene = decoded["id"]
     length_gene = end - start
-    return "The gene " + gene + " starts at " + str(start) + "\n" + "The gene " + gene + " ends at " + str(end) + "\n" + \
-           "The gene " + gene + " is located at " + str(chromosome) + " chromosome" + "\n" \
+    return "The gene " + gene + " starts at " + str(start) + "\n" + "The gene " + gene + " ends at " + str(end) + "\n" \
+           + "The gene " + gene + " is located at " + str(chromosome) + " chromosome" + "\n" \
            + "The id of the gene is: " + id_gene + "\n" + "The length of the gene " + gene + " is: " + str(length_gene)
 
 
@@ -145,6 +145,20 @@ def percentages(s):
     listkeys = list(a.keys())
     d = dict(zip(listkeys, listt))
     return d
+
+
+def gene_list(server6, chromosome, start, end):
+    ext = "/overlap/region/human/" + chromosome + ":" + start + "-" + end + \
+          "?feature=gene;feature=transcript;feature=cds;feature=exon"
+
+    r = requests.get(server6 + ext, headers={"Content-Type": "application/json"})
+
+    if not r.ok:
+        r.raise_for_status()
+        sys.exit()
+
+    decoded = r.json()
+    return decoded
 
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
@@ -313,6 +327,20 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents = Path("Error.html").read_text()
                 content_type = 'text/html'
                 error_code = 404
+        elif resource == "/geneList":
+            tittle = "LIST OF GENES IN A RANGE"
+            sub_tittle = "All the genes in a specific range"
+            contents_in = html_folder(tittle, sub_tittle)
+            index_1 = self.path.find("=")
+            index_2 = self.path.find("&")
+            chromosome = self.path[index_1 + 1: index_2]
+            function = gene_list(server, chromosome, start, end)
+            counter = 0
+            for n in function:
+                print(function[counter]["id"])
+                counter += 1
+            content_type = 'text/html'
+            error_code = 200
 
         else:
             contents = Path("Error.html").read_text()
