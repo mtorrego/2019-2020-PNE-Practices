@@ -25,16 +25,14 @@ def html_folder(title, sub_tittle):
   </head>
   <body style="background-color: lightblue;">
     <h1>{sub_tittle}</h1>
-    <p><textarea rows = "20" cols= "100" style="background-color: lightpink;">"""
+    """
 
     return main_message
 
 
 final_message = f"""
-    </textarea>
-    </p>
     <a href="http://127.0.0.1:8080/">Main Page </a>
-  </body>
+</body>
 </html> """
 
 
@@ -198,20 +196,20 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             contents_in = html_folder(tittle, sub_tittle)
             a = info_species(server)
             total_number = len(a)
-            contents_in += "There are a total of " + str(total_number) + " species in the database" + "\n"
+            contents_in += f"<p>There are a total of  {str(total_number)} species in the database<br>"
             counter = 0
             if msg == "":
                 number = total_number
             else:
                 number = msg
-            contents_in += "You have selectioned a number of: " + str(number) + " species" \
-                           + "\n" + "The name of the species are: " + "\n" + "\n"
+            contents_in += f"""You have selected a number of:  {str(number)}  species \
+<br>The name of the species are: <ul>"""
             if 0 < int(number) <= int(total_number):
                 while counter < int(number):
                     animal = a[counter]["common_name"]
-                    contents_in = contents_in + " ·" + animal + "\n"
+                    contents_in = contents_in + f"<li> {animal} </li>"
                     counter += 1
-                contents = contents_in + final_message
+                contents = contents_in + f"</ul>" + final_message
             else:
                 contents = Path("Error.html").read_text()
             content_type = 'text/html'
@@ -232,10 +230,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             if msg in list_species:
                 contents_in = html_folder(tittle, sub_tittle)
                 a = info_assembly(server, msg)
-                contents_in += "The names of the chromosomes of the specie: " + str(msg) + " are: " + "\n\n"
+                contents_in += f"The names of the chromosomes of the specie: {str(msg)}  are: <br><ul>"
                 for chrom in a:
-                    contents_in += " ·" + chrom + "\n"
-                contents = contents_in + final_message
+                    contents_in += f" <li> {chrom} </li>"
+                contents = contents_in + f"</ul>" + final_message
             else:
                 contents = Path("Error.html").read_text()
             content_type = 'text/html'
@@ -261,8 +259,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 if number in list_chromosome:
                     length_final = chromosome_length(server, specie, number)
                     contents_in = html_folder(tittle, sub_tittle)
-                    contents = contents_in + "The length of the chromosome " + number + " is " \
-                        + str(length_final) + final_message
+                    contents = contents_in + f"The length of the chromosome {number} is {str(length_final)} <br><br>" \
+                        + final_message
                 else:
                     contents = Path("Error.html").read_text()
             else:
@@ -279,8 +277,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 id_gene = gene_seq(gene)
                 sequence = get_sequence(id_gene)
                 contents_in = html_folder(tittle, sub_tittle)
-                contents = contents_in + "The sequence of the gene " + gene + " is: " + "\n\n" + sequence + \
-                    final_message
+                contents_in += f"""The sequence of the gene {gene} is:<p><textarea rows = "20" cols= "100" 
+style="background-color: lightpink;">{sequence}"""
+                contents = contents_in + f"</textarea></p>" + final_message
                 content_type = 'text/html'
                 error_code = 200
             except IndexError:
@@ -344,7 +343,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 function = gene_list(server, chromosome, start, end)
                 for n in function:
                     index = function.index(n)
-                    contents_in += "Gene: " + function[index]["id"] + "\n"
+                    contents_in += "Gene: " + function[index]["id"] + ""
+                    if "external_name" in function[index]:
+                        contents_in += " --> " + function[index]["external_name"] + "\n"
+                    else:
+                        contents_in += "\n"
                 contents = contents_in + final_message
                 content_type = 'text/html'
                 error_code = 200

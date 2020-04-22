@@ -11,10 +11,11 @@ if not r.ok:
 
 decoded = r.json()
 print(decoded)
-counter = 0
 for n in decoded:
     a = decoded.index(n)
-    print(decoded[a]["id"])
-    counter += 1
-print(counter)
+    print(decoded[a]["id"], end="")
+    if "external_name" in decoded[a]:
+        print("-->" + decoded[a]["external_name"])
+    else:
+        print("")
 
