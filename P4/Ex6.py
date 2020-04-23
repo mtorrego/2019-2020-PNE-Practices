@@ -44,17 +44,17 @@ def process_client(s):
     # Body (content to send)
     # This new contents are written in HTML language
     if "info/A" in req:
-        FILENAME = "A.html"
-        body = seq_read_fasta(FOLDER + FILENAME)
+        filename = "A.html"
+        body = seq_read_fasta(FOLDER + filename)
     elif "info/C" in req:
-        FILENAME = "C.html"
-        body = seq_read_fasta(FOLDER + FILENAME)
+        filename = "C.html"
+        body = seq_read_fasta(FOLDER + filename)
     elif "info/G" in req:
-        FILENAME = "G.html"
-        body = seq_read_fasta(FOLDER + FILENAME)
+        filename = "G.html"
+        body = seq_read_fasta(FOLDER + filename)
     elif "info/T" in req:
-        FILENAME = "T.html"
-        body = seq_read_fasta(FOLDER + FILENAME)
+        filename = "T.html"
+        body = seq_read_fasta(FOLDER + filename)
     elif " / HTTP" in req_line:
         body = seq_read_fasta(FOLDER + EMPTYFIL)
     else:

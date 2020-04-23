@@ -10,7 +10,6 @@ print()
 print(f"Server: {SERVER}")
 print(f"URL: {URL}")
 
-#Connect with the server
 conn = http.client.HTTPConnection(SERVER)
 
 try:

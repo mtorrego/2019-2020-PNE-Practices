@@ -12,7 +12,7 @@ person = json.loads(jsonstring)
 # associated to the fields 'Firstname', 'Lastname' and 'age'
 
 # Print the information on the console, in colors
-print("Total people in the database:" , len(person))
+print("Total people in the database:", len(person))
 for a in person:
     print()
     termcolor.cprint("Name: ", 'green', end="")

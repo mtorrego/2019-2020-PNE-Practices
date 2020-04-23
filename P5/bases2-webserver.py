@@ -35,7 +35,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # We are NOT processing the client's request
         # It is a happy server: It always returns a message saying
         # that everything is ok
-
+        msg = ""
         # Message to send back to the client
         if self.path == "/" or self.path == "/index.html":
             msg = "indeX.html"
@@ -50,8 +50,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Generating the response message
 
-
-        # Define the content-type header:
         self.send_header('Content-Type', 'text/html')
         self.send_header('Content-Length', len(contents.encode()))
 

@@ -43,11 +43,11 @@ def process_client(s):
 
     # This new contents are written in HTML language
     if "info/A" in req:
-        FILENAME = "A.html"
-        body = seq_read_fasta(FOLDER + FILENAME)
+        filename = "A.html"
+        body = seq_read_fasta(FOLDER + filename)
     elif "info/C" in req:
-        FILENAME = "C.html"
-        body = seq_read_fasta(FOLDER + FILENAME)
+        filename = "C.html"
+        body = seq_read_fasta(FOLDER + filename)
     else:
         body = seq_read_fasta(FOLDER + EMPTYFIL)
 

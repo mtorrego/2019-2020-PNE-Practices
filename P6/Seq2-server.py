@@ -77,7 +77,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
-
+        contents = ""
         # Open the form1.html file
         # Read the index from the file
         if self.path == "/":

@@ -11,7 +11,6 @@ print()
 print(f"Server: {SERVER}")
 print(f"URL: {URL}")
 
-#Connect with the server
 conn = http.client.HTTPConnection(SERVER)
 
 try:
@@ -33,11 +32,9 @@ data1 = response.read().decode("utf-8")
 # -- form the JSON received
 name = "MIR633"
 ex3 = json.loads(data1)
-#print(ex1)
 termcolor.cprint("Gene: ", "green", end="")
 print(name)
 termcolor.cprint("Description: ", "green", end="")
 print(ex3["desc"])
 termcolor.cprint("Bases: ", "green", end="")
 print(ex3["seq"])
-

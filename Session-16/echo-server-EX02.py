@@ -12,6 +12,8 @@ socketserver.TCPServer.allow_reuse_address = True
 
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
+
+
 class TestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):

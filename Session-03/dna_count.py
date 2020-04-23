@@ -1,7 +1,4 @@
 chain = input("Type a correct chain of DNA")
-#if "A" or "C" or "T" or "G" not in chain:
-    #print("Wrong chain")
-#else:
 counter = 0
 for letter in chain:
     counter += 1

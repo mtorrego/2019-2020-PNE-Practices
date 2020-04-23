@@ -27,13 +27,9 @@ class Gene(Seq):
     pass
 
 
-#----Main program
 s1 = Seq("AGTACACTGGT")
 g = Gene("CGTAAC", "FRAT1")
 print(f"Sequence 1 : {s1}")
 l1 = s1.len()
 print(f"    The length of the sequence 1 is {l1}")
 print(f"Gene: {g}")
-#print(f"    The length of sequence 2 is {g.len()}")
-
-#print("Testing objects...")

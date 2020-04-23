@@ -2,7 +2,6 @@ from Seq0 import *
 
 seq1 = "ATTCCCGGGG"
 
-#seq_check(seq1) #habria que crear una funcion nueva para chequear si solo tiene esas bases
 
 print(f"Seq:    {seq1}")
 print(f"  Rev : {seq_reverse(seq1)}")

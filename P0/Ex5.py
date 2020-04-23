@@ -7,9 +7,5 @@ seq1 = "AAACTG"
 dictionary = {}
 for name in list_names:
     print(name, ":")
-    #for base in bases:
     x = seq_read_fasta(FOLDER + name + ext)
     print(seq_count(x))
-    #for base in bases:
-     #   dictionary = {base: seq_count(x, base)}
-      #  print(dictionary)

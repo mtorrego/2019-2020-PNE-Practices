@@ -26,4 +26,3 @@ sequence = Seq(a)
 
 c.debug_talk("Sending U5 gene to the server...")
 c.debug_talk(str(sequence))
-

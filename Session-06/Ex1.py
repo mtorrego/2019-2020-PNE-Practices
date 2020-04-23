@@ -1,8 +1,6 @@
 class Seq:
     """A class for representing sequence objects"""
     def __init__(self, strbases):
-        #self.strbases = strbases
-        #print(self.strbases)
         bases = ["A", "C", "G", "T"]
         for base in strbases:
             if base not in bases:
@@ -25,6 +23,7 @@ class Seq:
 
 class Gene(Seq):
     pass
+
 
 s1 = Seq("ACCTGC")
 s2 = Seq("Hello? Am I a valid sequence?")

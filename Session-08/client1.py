@@ -18,5 +18,5 @@ msg = s.recv(2000)
 print("Message from the server: \n")
 print(msg.decode("utf-8"))
 
-#Closing the connection
+# Closing the connection
 s.close()

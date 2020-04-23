@@ -53,7 +53,7 @@ def process_client(s):
     header = "Content-Type: text/plain\n"
 
     # -- Add the Content-Length
-    a=5
+    a = 5
     header += f"Content-Length: {a}\n"
 
     # -- Build the message by joining together all the parts

@@ -22,7 +22,6 @@ FOLDER = "../Session-04/"
 list_names = ["U5", "ADA", "FRAT1", "FXN", "RNU6_269P"]
 ext = ".txt"
 a = s.read_fasta(FOLDER + "FRAT1" + ext)
-#sequence = Seq(a)
 
 
 def function(times):
@@ -37,7 +36,6 @@ def function(times):
 
 
 c.debug_talk("Sending FRAT1 gene to the server in fragments of 10 bases")
-#c.debug_talk(str(a))
 
 listtimes = [0, 10, 20, 30, 40]
 for time in listtimes:

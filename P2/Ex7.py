@@ -23,7 +23,6 @@ FOLDER = "../Session-04/"
 list_names = ["U5", "ADA", "FRAT1", "FXN", "RNU6_269P"]
 ext = ".txt"
 a = s.read_fasta(FOLDER + "FRAT1" + ext)
-#sequence = Seq(a)
 
 
 def function(times):
@@ -42,14 +41,9 @@ print("Gene FRAT1: ", a)
 for time in listtimes:
     print(function(time))
 
-
 listtimes1 = [10, 30, 50, 70, 90]
 for time in listtimes1:
     c.talk(function(time))
 listtimes2 = [0, 20, 40, 60, 80]
 for time in listtimes2:
     c1.talk(function(time))
-
-
-
-

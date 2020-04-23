@@ -1,7 +1,6 @@
 from pathlib import Path
 
 
-
 def seq_ping():
     print("OK")
 
@@ -22,7 +21,8 @@ def seq_count_base(sequence, base):
 
 
 def seq_count(sequence):
-    result = {"A": seq_count_base(sequence, "A"), "C": seq_count_base(sequence, "C"), "G": seq_count_base(sequence, "G"), "T": seq_count_base(sequence, "T")}
+    result = {"A": seq_count_base(sequence, "A"), "C": seq_count_base(sequence, "C"),
+              "G": seq_count_base(sequence, "G"), "T": seq_count_base(sequence, "T")}
     return result
 
 

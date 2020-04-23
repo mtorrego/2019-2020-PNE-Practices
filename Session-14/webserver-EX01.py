@@ -35,7 +35,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Generating the response message
 
-
         # Define the content-type header:
         self.send_header('Content-Type', 'text/plain')
         self.send_header('Content-Length', len(contents.encode()))
