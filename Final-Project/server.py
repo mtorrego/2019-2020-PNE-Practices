@@ -127,9 +127,9 @@ def gene_info(server5, gene):
     chromosome = decoded["seq_region_name"]
     id_gene = decoded["id"]
     length_gene = end - start
-    return "The gene " + gene + " starts at " + str(start) + "\n" + "The gene " + gene + " ends at " + str(end) + "\n" \
-           + "The gene " + gene + " is located at " + str(chromosome) + " chromosome" + "\n" \
-           + "The id of the gene is: " + id_gene + "\n" + "The length of the gene " + gene + " is: " + str(length_gene)
+    return f"The gene gene  starts at  {str(start)}<br>The gene gene ends at {str(end)}<br>The gene gene is located " \
+           f"at {str(chromosome)} chromosome<br>The id of the gene is:  {id_gene}<br>" \
+           f"The length of the gene is: {str(length_gene)}<br><br>"
 
 
 def percentages(s):
@@ -316,12 +316,12 @@ style="background-color: lightpink;">{sequence}"""
                 dict_sol = percentages(seq)
                 a = list(dict_sol.keys())
                 b = list(dict_sol.values())
-                contents_in += "The length of the gene is: " + str(seq.len()) + "\n" + "\n"
+                contents_in += f"The length of the gene is: {str(seq.len())} <br>Information about the bases<ul>"
                 for n in dict_sol.keys():
                     p = a.index(n)
-                    contents_in += " · Base: " + str(a[p])
-                    contents_in += " -->" + str(b[p]) + "\n"
-                contents = contents_in + final_message
+                    contents_in += f"<li> Base:  {str(a[p])}"
+                    contents_in += f" --> {str(b[p])} </li>"
+                contents = contents_in + f"</ul>" + final_message
                 content_type = 'text/html'
                 error_code = 200
             except IndexError:
@@ -341,13 +341,14 @@ style="background-color: lightpink;">{sequence}"""
                 start = list_[2][:b]
                 end = list_[3]
                 function = gene_list(server, chromosome, start, end)
+                contents_in += f"The genes in the range: {start} - {end} are: <br><br>"
                 for n in function:
                     index = function.index(n)
-                    contents_in += "Gene: " + function[index]["id"] + ""
+                    contents_in += f"""Gene: {function[index]["id"]}"""
                     if "external_name" in function[index]:
-                        contents_in += " --> " + function[index]["external_name"] + "\n"
+                        contents_in += f""" -->  {function[index]["external_name"]}<br>"""
                     else:
-                        contents_in += "\n"
+                        contents_in += f"<br>"
                 contents = contents_in + final_message
                 content_type = 'text/html'
                 error_code = 200

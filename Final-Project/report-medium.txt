@@ -2936,4 +2936,60 @@ style="background-color: lightpink;">AAGCTTTTGTAAGATCGGCTCGCTTTGGGGAACAGGTCTTGAG
 
 
 
+39th PROVE -CORRECTIONS - gene-Info
 
+*Input:
+http://127.0.0.1:8080/geneInfo?gene=FRAT1
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>INFO OF A GENE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>The information of a human gene</h1>
+    The gene gene  starts at  97319271<br>The gene gene ends at 97321915<br>The gene gene is located at 10 chromosome<br>The id of the gene is:  ENSG00000165879<br>The length of the gene is: 2644<br><br>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+</body>
+</html>
+
+
+
+40th PROVE -CORRECTIONS - gene-Calc
+
+*Input:
+http://127.0.0.1:8080/geneCalc?gene=BRCA2
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>INFO OF A GENE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>The information of a human gene</h1>
+    The length of the gene is: 85181 <br><br><ul><li> Base:  A --> 25968 (30, 2)% </li><li> Base:  C --> 15557 (18, 2)% </li><li> Base:  G --> 16983 (20, 2)% </li><li> Base:  T --> 26673 (31, 2)% </li></ul>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+</body>
+</html>
+
+
+
+41st PROVE -CORRECTIONS - gene-List - corrected and added new designs
+
+*Input:
+http://127.0.0.1:8080/geneList?chromo=4&start=42222&end=122222
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LIST OF GENES IN A RANGE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>All the genes in a specific range</h1>
+    The genes in the range: 42222 - 122222 are: <br><br>Gene: ENSG00000248302 -->  BNIP3P41<br>Gene: ENSG00000272602 -->  ZNF595<br>Gene: ENSG00000250238 -->  AC253576.1<br>Gene: ENST00000616656 -->  BNIP3P41-202<br>Gene: ENST00000503774 -->  BNIP3P41-201<br>Gene: ENST00000608255 -->  ZNF595-203<br>Gene: ENST00000609518 -->  ZNF595-204<br>Gene: ENST00000509152 -->  ZNF595-202<br>Gene: ENST00000610261 -->  ZNF595-205<br>Gene: ENST00000502981 -->  ZNF595-201<br>Gene: ENST00000511645 -->  AC253576.1-201<br>Gene: ENSP00000476367<br>Gene: ENSP00000476408<br>Gene: ENSP00000476408<br>Gene: ENSP00000476408<br>Gene: ENSP00000434858<br>Gene: ENSP00000434858<br>Gene: ENSP00000434858<br>Gene: ENSP00000434858<br>Gene: ENSP00000477392<br>Gene: ENSP00000477392<br>Gene: ENSP00000477392<br>Gene: ENSP00000477392<br>Gene: ENSE00003749735<br>Gene: ENSE00002063424<br>Gene: ENSE00003752731<br>Gene: ENSE00003704644<br>Gene: ENSE00002298784<br>Gene: ENSE00003714636<br>Gene: ENSE00003705825<br>Gene: ENSE00002066979<br>Gene: ENSE00003714636<br>Gene: ENSE00003729457<br>Gene: ENSE00002026710<br>Gene: ENSE00003703435<br>Gene: ENSE00003714636<br>Gene: ENSE00003729457<br>Gene: ENSE00003710283<br>Gene: ENSE00001494444<br>Gene: ENSE00003627183<br>Gene: ENSE00002029085<br>Gene: ENSE00002084355<br>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+</body>
+</html>
