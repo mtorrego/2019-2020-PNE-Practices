@@ -47,8 +47,8 @@ def info_species(server1):
 
     decoded = r.json()
     # print(repr(decoded["species"][-1]["common_name"]))
-    a = list(decoded["species"])
-    return a
+    list_species = list(decoded["species"])
+    return list_species
 
 
 def info_assembly(server1, specie):
@@ -62,8 +62,8 @@ def info_assembly(server1, specie):
 
     decoded = r.json()
     # print(repr(decoded))
-    a = list(decoded["karyotype"])
-    return a
+    list_karyotype = list(decoded["karyotype"])
+    return list_karyotype
 
 
 def chromosome_length(server1, specie, number1):
@@ -132,16 +132,16 @@ def gene_info(server5, gene):
            f"The length of the gene is: {str(length_gene)}<br><br>"
 
 
-def percentages(s):
-    a = s.count()
-    b = s.len()
-    listvalues = list(a.values())
+def percentages(seq):
+    count_bases = seq.count()
+    length = seq.len()
+    listvalues = list(count_bases.values())
     listt = []
     for value in listvalues:
-        listt.append(f"{value} {round(value / b * 100), 2}%")
-    listkeys = list(a.keys())
-    d = dict(zip(listkeys, listt))
-    return d
+        listt.append(f"{value} {round(value / length * 100), 2}%")
+    listkeys = list(count_bases.keys())
+    full_dictionary = dict(zip(listkeys, listt))
+    return full_dictionary
 
 
 def gene_list(server6, chromosome, start, end):
@@ -210,10 +210,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents_in = contents_in + f"<li> {animal} </li>"
                     counter += 1
                 contents = contents_in + f"</ul>" + final_message
+                error_code = 200
             else:
                 contents = Path("Error.html").read_text()
+                error_code = 404
             content_type = 'text/html'
-            error_code = 200
         elif resource == "/karyotype":
             line = list_resource[1]
             tittle = "KARYOTYPE OF A SPECIFIC SPECIE"
@@ -234,10 +235,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 for chrom in a:
                     contents_in += f" <li> {chrom} </li>"
                 contents = contents_in + f"</ul>" + final_message
+                error_code = 200
             else:
                 contents = Path("Error.html").read_text()
+                error_code = 404
             content_type = 'text/html'
-            error_code = 200
         elif resource == "/chromosomeLength":
             line = list_resource[1]
             tittle = "LENGTH OF THE SELECTED CHROMOSOME"
@@ -261,12 +263,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents_in = html_folder(tittle, sub_tittle)
                     contents = contents_in + f"The length of the chromosome {number} is {str(length_final)} <br><br>" \
                         + final_message
+                    error_code = 200
                 else:
                     contents = Path("Error.html").read_text()
+                    error_code = 404
             else:
                 contents = Path("Error.html").read_text()
+                error_code = 404
             content_type = 'text/html'
-            error_code = 200
         elif resource == "/geneSeq":
             try:
                 line = list_resource[1]
@@ -280,12 +284,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents_in += f"""The sequence of the gene {gene} is:<p><textarea rows = "20" cols= "100" 
 style="background-color: lightpink;">{sequence}"""
                 contents = contents_in + f"</textarea></p>" + final_message
-                content_type = 'text/html'
                 error_code = 200
             except IndexError:
                 contents = Path("Error.html").read_text()
-                content_type = 'text/html'
                 error_code = 404
+            content_type = 'text/html'
         elif resource == "/geneInfo":
             try:
                 line = list_resource[1]
@@ -296,12 +299,11 @@ style="background-color: lightpink;">{sequence}"""
                 gene = line[initial_index + 1:]
                 contents_in += gene_info(server, gene)
                 contents = contents_in + final_message
-                content_type = 'text/html'
                 error_code = 200
             except IndexError:
                 contents = Path("Error.html").read_text()
-                content_type = 'text/html'
                 error_code = 404
+            content_type = 'text/html'
         elif resource == "/geneCalc":
             try:
                 line = list_resource[1]
@@ -322,12 +324,11 @@ style="background-color: lightpink;">{sequence}"""
                     contents_in += f"<li> Base:  {str(a[p])}"
                     contents_in += f" --> {str(b[p])} </li>"
                 contents = contents_in + f"</ul>" + final_message
-                content_type = 'text/html'
                 error_code = 200
             except IndexError:
                 contents = Path("Error.html").read_text()
-                content_type = 'text/html'
                 error_code = 404
+            content_type = 'text/html'
         elif resource == "/geneList":
             try:
                 line = list_resource[1]
@@ -350,19 +351,17 @@ style="background-color: lightpink;">{sequence}"""
                     else:
                         contents_in += f"<br>"
                 contents = contents_in + final_message
-                content_type = 'text/html'
                 error_code = 200
             except requests.exceptions.HTTPError:
                 contents = Path("Error.html").read_text()
-                content_type = 'text/html'
                 error_code = 404
+            content_type = 'text/html'
 
         else:
             contents = Path("Error.html").read_text()
             content_type = 'text/html'
             error_code = 404
 
-        print(resource)
         print(contents)
         self.send_response(error_code)
         # Define the content-type header:

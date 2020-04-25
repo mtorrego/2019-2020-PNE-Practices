@@ -2993,3 +2993,46 @@ http://127.0.0.1:8080/geneList?chromo=4&start=42222&end=122222
     <a href="http://127.0.0.1:8080/">Main Page </a>
 </body>
 </html>
+
+
+
+41st PROVE -CORRECTIONS with the error code
+
+*Input:
+http://127.0.0.1:8080/karyotype?specie=horse
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KARYOTYPE OF A SPECIFIC SPECIE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>Karyotype of a specie</h1>
+    The names of the chromosomes of the specie: horse  are: <br><ul> <li> 1 </li> <li> 2 </li> <li> 3 </li> <li> 4 </li> <li> 5 </li> <li> 6 </li> <li> 7 </li> <li> 8 </li> <li> 9 </li> <li> 10 </li> <li> 11 </li> <li> 12 </li> <li> 13 </li> <li> 14 </li> <li> 15 </li> <li> 16 </li> <li> 17 </li> <li> 18 </li> <li> 19 </li> <li> 20 </li> <li> 21 </li> <li> 22 </li> <li> 23 </li> <li> 24 </li> <li> 25 </li> <li> 26 </li> <li> 27 </li> <li> 28 </li> <li> 29 </li> <li> 30 </li> <li> 31 </li> <li> X </li></ul>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+</body>
+</html>
+
+
+42nd PROVE - the error code 404 that I have not written it before, and I have to delete the print of the resource
+
+*Input:
+http://127.0.0.1:8080/karyotype?specie=coronavirus
+*Output:
+127.0.0.1 - - [25/Apr/2020 12:04:01] "GET /karyotype?specie=coronavirus HTTP/1.1" 404 -
+/karyotype
+<!DOCTYPE html>
+    <html lang="en" dir="ltr">
+      <head>
+        <meta charset="utf-8">
+        <title>ERROR</title>
+      </head>
+      <body style="background-color: red;">
+        <h1>ERROR</h1>
+        <p>This page appears because you are writing something that is not correct</p>
+        <br>
+        <p>Please try again</p>
+        <a href="http://127.0.0.1:8080/">Main page</a>
+      </body>
+    </html>
