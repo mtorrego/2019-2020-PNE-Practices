@@ -5,29 +5,103 @@
     <title>API REST</title>
 </head>
 <body style="background-color: lightyellow;">
+    <h1>Browsing Human and Vertebrate Genome</h1>
+    <h2>BASIC Level services</h2>
     <p>JSON Server. My API REST is: </p>
     <ul>
         <li>GET listSpecies
-        <p>Get the list of all my species -->
-    <a href="listSpecies">Test</a></p></li>
+            <form action="listSpecies" method="get">
+                <p>
+                    Limit:
+                    <input type="text" name="limit">
+                    <br><br>
+                    JSON:
+                    <input type="checkbox" name="json" value="1">
+                    <input type="submit" value="SEND">
+                </p>
+            </form>
+        </li>
         <li>GET karyotype
-        <p>Get the list of all the karyptypes of a specie -->
-    <a href="karyotype">Test</a></p></li>
+            <form action="karyotype" method="get">
+                <p>
+                    Select the species
+                    <input type="text" name="specie">
+                    <br><br>
+                    JSON:
+                    <input type="checkbox" name="json" value="1">
+                    <input type="submit" value="SEND">
+                </p>
+            </form>
+        </li>
         <li>GET chromosomeLength
-        <p>Get the length of a specific chromosome -->
-    <a href="chromosomeLength">Test</a></p></li>
+            <form action="chromosomeLength" method="get">
+                <p>
+                    Select the species
+                    <input type="text" name="specie">
+                    <br><br>
+                    Select the chromosome
+                    <input type="text" name="chromo">
+                    <br><br>
+                    JSON:
+                    <input type="checkbox" name="json" value="1">
+                    <input type="submit" value="SEND">
+                </p>
+            </form>
+        </li>
         <li>GET geneSeq
-        <p>Get the sequence of a gene -->
-    <a href="geneSeq">Test</a></p></li>
+            <form action="geneSeq" method="get">
+                <p>
+                    Select the gene
+                    <input type="text" name="gene">
+                    <br><br>
+                    JSON:
+                    <input type="checkbox" name="json" value="1">
+                    <input type="submit" value="SEND">
+                </p>
+            </form>
+        </li>
         <li>GET geneInfo
-        <p>Get the information about a gene -->
-    <a href="geneInfo">Test</a></p></li>
+            <form action="geneInfo" method="get">
+                <p>
+                    Select the gene
+                    <input type="text" name="gene">
+                    <br><br>
+                    JSON:
+                    <input type="checkbox" name="json" value="1">
+                    <input type="submit" value="SEND">
+                </p>
+            </form>
+        </li>
         <li>GET geneCalc
-        <p>Get the length of a specific chromosome -->
-    <a href="geneCalc">Test</a></p></li>
+            <form action="geneCalc" method="get">
+                <p>
+                    Select the gene
+                    <input type="text" name="gene">
+                    <br><br>
+                    JSON:
+                    <input type="checkbox" name="json" value="1">
+                    <input type="submit" value="SEND">
+                </p>
+            </form>
+        </li>
         <li>GET geneList
-        <p>Get the list of the genes in a range -->
-    <a href="geneList">Test</a></p></li>
+            <form action="geneList" method="get">
+                <p>
+                    Select the chromosome
+                    <input type="text" name="chromo">
+                    <br><br>
+                    Select where it starts
+                    <input type="text" name="start">
+                    <br><br>
+                    Select where it ends
+                    <input type="text" name="end">
+                    <br><br>
+                    JSON:
+                    <input type="checkbox" name="json" value="1">
+                    <input type="submit" value="SEND">
+                </p>
+            </form>
+        </li>
     </ul>
 
 </body>

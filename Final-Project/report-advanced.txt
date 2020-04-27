@@ -3099,3 +3099,111 @@ http://127.0.0.1:8080/geneList?chromo=4&start=42222&end=422233
     <a href="http://127.0.0.1:8080/">Main Page </a>
 </body>
 </html>
+
+
+
+
+46th PROVE - I have started the advanced level, with the new main page, and with the statement json
+this prove is without the json=1 - I have to change the code because with the json it does not work
+because of the partition of the resource
+
+*Input:
+http://127.0.0.1:8080/listSpecies?limit=55
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LIST OF SPECIES IN THE BROWSER</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>List of species</h1>
+    <p>There are a total of  267 species in the database<br>You have selected a number of:  55  species             <br>The name of the species are: <ul><li> sailfin molly </li><li> Japanese medaka HSOK </li><li> Black snub-nosed monkey </li><li> Golden Hamster </li><li> Periophthalmus magnuspinnatus </li><li> western mosquitofish </li><li> eastern happy </li><li> Golden snub-nosed monkey </li><li> Great spotted kiwi </li><li> donkey </li><li> western European hedgehog </li><li> Amazon molly </li><li> pig </li><li> Abingdon island giant tortoise </li><li> fruit fly </li><li> house mouse </li><li> giant panda </li><li> white-tufted-ear marmoset </li><li> American pika </li><li> western european house mouse </li><li> common carp huanghe </li><li> Spoon-billed sandpiper </li><li> pig </li><li> tiger tail seahorse </li><li> tuatara </li><li> White-headed capuchin </li><li> pig </li><li> pig </li><li> horse </li><li> Long-tailed chinchilla </li><li> mangrove rivulus </li><li> ballan wrasse </li><li> golden-collared manakin </li><li> pink-footed goose </li><li> blue tit </li><li> greater amberjack </li><li> Sea squirt Ciona savignyi </li><li> naked mole-rat </li><li> Midas cichlid </li><li> Agassiz's desert tortoise </li><li> house mouse </li><li> Ryukyu mouse </li><li> clown anemonefish </li><li> reedfish </li><li> Makobe Island cichlid </li><li> Domestic sheep </li><li> southern platyfish </li><li> American mink </li><li> Western painted turtle </li><li> orange clownfish </li><li> Chinese hamster </li><li> house mouse </li><li> zebra finch </li><li> Japanese quail </li><li> mummichog </li></ul>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+</body>
+
+
+
+47th PROVE - NOW IT DOES WORK, i just had to modify the resource depending on if the json is present or not
+*Input:
+http://127.0.0.1:8080/listSpecies?limit=55&json=1
+*Output:
+GET /listSpecies?limit=55&json=1 HTTP/1.1
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LIST OF SPECIES IN THE BROWSER</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>List of species</h1>
+    <p>There are a total of  267 species in the database<br>You have selected a number of:  55  species             <br>The name of the species are: <ul><li> sailfin molly </li><li> Japanese medaka HSOK </li><li> Black snub-nosed monkey </li><li> Golden Hamster </li><li> Periophthalmus magnuspinnatus </li><li> western mosquitofish </li><li> eastern happy </li><li> Golden snub-nosed monkey </li><li> Great spotted kiwi </li><li> donkey </li><li> western European hedgehog </li><li> Amazon molly </li><li> pig </li><li> Abingdon island giant tortoise </li><li> fruit fly </li><li> house mouse </li><li> giant panda </li><li> white-tufted-ear marmoset </li><li> American pika </li><li> western european house mouse </li><li> common carp huanghe </li><li> Spoon-billed sandpiper </li><li> pig </li><li> tiger tail seahorse </li><li> tuatara </li><li> White-headed capuchin </li><li> pig </li><li> pig </li><li> horse </li><li> Long-tailed chinchilla </li><li> mangrove rivulus </li><li> ballan wrasse </li><li> golden-collared manakin </li><li> pink-footed goose </li><li> blue tit </li><li> greater amberjack </li><li> Sea squirt Ciona savignyi </li><li> naked mole-rat </li><li> Midas cichlid </li><li> Agassiz's desert tortoise </li><li> house mouse </li><li> Ryukyu mouse </li><li> clown anemonefish </li><li> reedfish </li><li> Makobe Island cichlid </li><li> Domestic sheep </li><li> southern platyfish </li><li> American mink </li><li> Western painted turtle </li><li> orange clownfish </li><li> Chinese hamster </li><li> house mouse </li><li> zebra finch </li><li> Japanese quail </li><li> mummichog </li></ul>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+</body>
+</html>
+
+
+
+48th PROVE - I did some changes in the order of the code, so I had to prove if it still worked
+*Input:
+http://127.0.0.1:8080/karyotype?specie=pig
+*Output:
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KARYOTYPE OF A SPECIFIC SPECIE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>Karyotype of a specie</h1>
+    The names of the chromosomes of the specie: pig  are: <br><ul> <li> 1 </li> <li> 2 </li> <li> 3 </li> <li> 4 </li> <li> 5 </li> <li> 6 </li> <li> 7 </li> <li> 8 </li> <li> 9 </li> <li> 10 </li> <li> 11 </li> <li> 12 </li> <li> 13 </li> <li> 14 </li> <li> 15 </li> <li> 16 </li> <li> 17 </li> <li> 18 </li> <li> X </li> <li> Y </li> <li> MT </li></ul>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+</body>
+</html>
+
+
+
+49th PROVE - It works with the json=1 too
+*Input:
+http://127.0.0.1:8080/karyotype?specie=pig&json=1
+*Output:
+GET /karyotype?specie=pig&json=1 HTTP/1.1
+127.0.0.1 - - [27/Apr/2020 14:00:37] "GET /karyotype?specie=pig&json=1 HTTP/1.1" 200 -
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KARYOTYPE OF A SPECIFIC SPECIE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>Karyotype of a specie</h1>
+    The names of the chromosomes of the specie: pig  are: <br><ul> <li> 1 </li> <li> 2 </li> <li> 3 </li> <li> 4 </li> <li> 5 </li> <li> 6 </li> <li> 7 </li> <li> 8 </li> <li> 9 </li> <li> 10 </li> <li> 11 </li> <li> 12 </li> <li> 13 </li> <li> 14 </li> <li> 15 </li> <li> 16 </li> <li> 17 </li> <li> 18 </li> <li> X </li> <li> Y </li> <li> MT </li></ul>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+</body>
+</html>
+
+
+
+
+50th PROVE - I wanted to prove it at all the exercises and it works so the changes at the json has worked
+*Input:
+http://127.0.0.1:8080/geneCalc?gene=TP53&json=1
+*Output:
+GET /geneCalc?gene=TP53&json=1 HTTP/1.1
+127.0.0.1 - - [27/Apr/2020 14:01:48] "GET /geneCalc?gene=TP53&json=1 HTTP/1.1" 200 -
+New sequence created!
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>INFO OF A GENE</title>
+  </head>
+  <body style="background-color: lightblue;">
+    <h1>The information of a human gene</h1>
+    The length of the gene is: 25772 <br>Information about the bases<ul><li> Base:  A --> 6833 (27, 2)% </li><li> Base:  C --> 6198 (24, 2)% </li><li> Base:  G --> 6394 (25, 2)% </li><li> Base:  T --> 6347 (25, 2)% </li></ul>
+    <a href="http://127.0.0.1:8080/">Main Page </a>
+</body>
+</html>
