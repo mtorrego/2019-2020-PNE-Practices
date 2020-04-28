@@ -398,7 +398,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents = Path("Error.html").read_text()
                     error_code = 404
 
-        talking(request_line)
+        #talking(request_line)
         #print(contents)
         self.send_response(error_code)
         # Define the content-type header:
