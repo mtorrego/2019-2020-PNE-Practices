@@ -6,11 +6,12 @@ import http.client
 import requests
 import sys
 import json
+import socket
 
 # Define the Server's port
 PORT = 8080
 server = "https://rest.ensembl.org"
-
+IP = "localhost"
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
 
@@ -168,6 +169,43 @@ def list_names(dict_species):
     return list_name
 
 
+def talking(message):
+    serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    MAX_OPEN_REQUESTS = 5
+    number_con = 0
+    try:
+        serversocket.bind((IP, PORT))
+        # become a server socket
+        # MAX_OPEN_REQUESTS connect requests before refusing outside connections
+        serversocket.listen(MAX_OPEN_REQUESTS)
+        while True:
+            # accept connections from outside
+            print("Waiting for connections at {}, {} ".format(IP, PORT))
+            (clientsocket, address) = serversocket.accept()
+
+            # Another connection!e
+            number_con += 1
+
+            # Print the conection number
+            print("CONNECTION: {}. From the IP: {}".format(number_con, address))
+
+            # Read the message from the client, if any
+            #msg = clientsocket.recv(2048).decode("utf-8")
+            #print("Message from client: {}".format(""))
+            #termcolor.cprint(msg, "green")
+
+            # Send the messag
+            send_bytes = str.encode(message)
+            # We must write bytes, not a string
+            clientsocket.send(send_bytes)
+            clientsocket.close()
+    except socket.error:
+        print("Problems using port {}. Do you have permission?".format(PORT))
+
+    except KeyboardInterrupt:
+        print("Server stopped by the user")
+        serversocket.close()
+
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
 
@@ -180,6 +218,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
+        request_line = self.requestline
 
         # Open the form1.html file
         # Read the index from the file
@@ -359,7 +398,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents = Path("Error.html").read_text()
                     error_code = 404
 
-        print(contents)
+        talking(request_line)
+        #print(contents)
         self.send_response(error_code)
         # Define the content-type header:
         self.send_header('Content-Type', content_type)
