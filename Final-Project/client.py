@@ -16,7 +16,7 @@ conn = http.client.HTTPConnection(SERVER, PORT)
 # -- list_endpoints = ["/", "/listSpecies", "/karyotype", "/chromosomeLength",
 # "/geneSeq", "/geneInfo", "/geneCalc", "/geneList"]
 try:
-    conn.request("GET", "/geneInfo?gene=FRAT1&json=1")
+    conn.request("GET", "/geneList?chromo=4&start=42222&end=422233&json=1")
 except ConnectionRefusedError:
     print("ERROR! Cannot connect to the Server")
     exit()

@@ -6,7 +6,6 @@ import http.client
 import requests
 import sys
 import json
-import base64
 
 # Define the Server's port
 PORT = 8080
@@ -354,11 +353,19 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     list_keys = list(dict_sol.keys())
                     list_values = list(dict_sol.values())
                     contents_in += f"The length of the gene is: {str(seq.len())} <br>Information about the bases<ul>"
-                    for n in list_keys:
-                        index_base = list_keys.index(n)
-                        contents_in += f"<li> Base:  {str(list_keys[index_base])}"
-                        contents_in += f" --> {str(list_values[index_base])} </li>"
-                    contents = contents_in + f"</ul>" + final_message
+                    if "json=1" in self.path:
+                        for n in list_keys:
+                            index_base = list_keys.index(n)
+                            list_keys[index_base] = "Base: " + list_keys[index_base]
+                        list_keys.append("The length of the gene is: ")
+                        list_values.append(str(seq.len()))
+                        contents = dict(zip(list_keys, list_values))
+                    else:
+                        for n in list_keys:
+                            index_base = list_keys.index(n)
+                            contents_in += f"<li> Base:  {str(list_keys[index_base])}"
+                            contents_in += f" --> {str(list_values[index_base])} </li>"
+                        contents = contents_in + f"</ul>" + final_message
                     error_code = 200
                 except IndexError:
                     contents = Path("Error.html").read_text()
@@ -377,14 +384,26 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     end = list_[3]
                     function = gene_list(server, chromosome, start, end)
                     contents_in += f"The genes in the range: {start} - {end} are: <br><br>"
-                    for n in function:
-                        index = function.index(n)
-                        contents_in += f"""Gene: {function[index]["id"]}"""
-                        if "external_name" in function[index]:
-                            contents_in += f""" -->  {function[index]["external_name"]}<br>"""
-                        else:
-                            contents_in += f"<br>"
-                    contents = contents_in + final_message
+                    if "json=1" in self.path:
+                        list_keys = []
+                        list_values = []
+                        for n in function:
+                            index = function.index(n)
+                            list_keys.append(function[index]["id"])
+                            if "external_name" in function[index]:
+                                list_values.append(function[index]["external_name"])
+                            else:
+                                list_values.append("No name found")
+                        contents = dict(zip(list_keys, list_values))
+                    else:
+                        for n in function:
+                            index = function.index(n)
+                            contents_in += f"""Gene: {function[index]["id"]}"""
+                            if "external_name" in function[index]:
+                                contents_in += f""" -->  {function[index]["external_name"]}<br>"""
+                            else:
+                                contents_in += f"<br>"
+                        contents = contents_in + final_message
                     error_code = 200
                 except requests.exceptions.HTTPError:
                     contents = Path("Error.html").read_text()
@@ -396,7 +415,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         self.send_header('Content-Type', content_type)
         if "json=1" in self.path:
             encoded_dict = str(contents).encode('utf-8')
-            base64_dict = base64.b64encode(encoded_dict)
+            # -- base64_dict = base64.b64encode(encoded_dict)
             self.send_header('Content-Length', len(encoded_dict))
             self.end_headers()
             self.wfile.write(encoded_dict)
