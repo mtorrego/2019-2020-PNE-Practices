@@ -1,25 +1,22 @@
 # -- Example of a client that uses the HTTP.client library
 # -- for requesting the main page from the server
 import http.client
-from Client0 import Client
 
 PORT = 8080
 SERVER = 'localhost'
 
 print(f"\nConnecting to server: {SERVER}:{PORT}\n")
-#c = Client(SERVER, PORT)
-#print(c)
-#c.talk("prove")
+
 
 # Connect with the server
 conn = http.client.HTTPConnection(SERVER, PORT)
 
 # -- Send the request message, using the GET method. We are
 # -- requesting the main page (/)
-list_endpoints = ["/", "/listSpecies", "/karyotype", "/chromosomeLength",
-                  "/geneSeq", "/geneInfo", "/geneCalc", "/geneList"]
+# -- list_endpoints = ["/", "/listSpecies", "/karyotype", "/chromosomeLength",
+# "/geneSeq", "/geneInfo", "/geneCalc", "/geneList"]
 try:
-    conn.request("GET", "/")
+    conn.request("GET", "/geneInfo?gene=FRAT1&json=1")
 except ConnectionRefusedError:
     print("ERROR! Cannot connect to the Server")
     exit()

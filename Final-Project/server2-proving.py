@@ -6,7 +6,7 @@ import http.client
 import requests
 import sys
 import json
-import socket
+import base64
 
 # Define the Server's port
 PORT = 8080
@@ -128,9 +128,7 @@ def gene_info(server5, gene):
     chromosome = decoded["seq_region_name"]
     id_gene = decoded["id"]
     length_gene = end - start
-    return f"The gene gene  starts at  {str(start)}<br>The gene gene ends at {str(end)}<br>The gene gene is located " \
-           f"at {str(chromosome)} chromosome<br>The id of the gene is:  {id_gene}<br>" \
-           f"The length of the gene is: {str(length_gene)}<br><br>"
+    return start, end, chromosome, id_gene, length_gene
 
 
 def percentages(seq):
@@ -169,43 +167,6 @@ def list_names(dict_species):
     return list_name
 
 
-def talking(message):
-    serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    MAX_OPEN_REQUESTS = 5
-    number_con = 0
-    try:
-        serversocket.bind((IP, PORT))
-        # become a server socket
-        # MAX_OPEN_REQUESTS connect requests before refusing outside connections
-        serversocket.listen(MAX_OPEN_REQUESTS)
-        while True:
-            # accept connections from outside
-            print("Waiting for connections at {}, {} ".format(IP, PORT))
-            (clientsocket, address) = serversocket.accept()
-
-            # Another connection!e
-            number_con += 1
-
-            # Print the conection number
-            print("CONNECTION: {}. From the IP: {}".format(number_con, address))
-
-            # Read the message from the client, if any
-            #msg = clientsocket.recv(2048).decode("utf-8")
-            #print("Message from client: {}".format(""))
-            #termcolor.cprint(msg, "green")
-
-            # Send the messag
-            send_bytes = str.encode(message)
-            # We must write bytes, not a string
-            clientsocket.send(send_bytes)
-            clientsocket.close()
-    except socket.error:
-        print("Problems using port {}. Do you have permission?".format(PORT))
-
-    except KeyboardInterrupt:
-        print("Server stopped by the user")
-        serversocket.close()
-
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
 
@@ -218,7 +179,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
-        request_line = self.requestline
 
         # Open the form1.html file
         # Read the index from the file
@@ -256,12 +216,21 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     number = msg
                 contents_in += f"""You have selected a number of:  {str(number)}  species \
             <br>The name of the species are: <ul>"""
+                list_animals = []
+                list_counter = []
                 if 0 < int(number) <= int(total_number):
-                    while counter < int(number):
-                        animal = a[counter]["common_name"]
-                        contents_in = contents_in + f"<li> {animal} </li>"
-                        counter += 1
-                    contents = contents_in + f"</ul>" + final_message
+                    if "json=1" in self.path:
+                        while counter < int(number):
+                            list_animals.append(a[counter]["common_name"])
+                            counter += 1
+                            list_counter.append(str(counter)+": ")
+                        contents = dict(zip(list_counter, list_animals))
+                    else:
+                        while counter < int(number):
+                            animal = a[counter]["common_name"]
+                            contents_in = contents_in + f"<li> {animal} </li>"
+                            counter += 1
+                        contents = contents_in + f"</ul>" + final_message
                     error_code = 200
                 else:
                     contents = Path("Error.html").read_text()
@@ -278,9 +247,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents_in = html_folder(tittle, sub_tittle)
                     list_karyotype = info_assembly(server, msg)
                     contents_in += f"The names of the chromosomes of the specie: {str(msg)}  are: <br><ul>"
-                    for karyotype in list_karyotype:
-                        contents_in += f" <li> {karyotype} </li>"
-                    contents = contents_in + f"</ul>" + final_message
+                    if "json=1" in self.path:
+                        counter_list = []
+                        for karyotype in list_karyotype:
+                            index = str(list_karyotype.index(karyotype))
+                            counter_list.append(index)
+                        contents = dict(zip(counter_list, list_karyotype))
+                    else:
+                        for karyotype in list_karyotype:
+                            contents_in += f" <li> {karyotype} </li>"
+                        contents = contents_in + f"</ul>" + final_message
                     error_code = 200
                 else:
                     contents = Path("Error.html").read_text()
@@ -305,7 +281,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     if number in list_chromosome:
                         length_final = chromosome_length(server, specie, number)
                         contents_in = html_folder(tittle, sub_tittle)
-                        contents = contents_in + f"The length of the chromosome {number} is {str(length_final)} " \
+                        if "json=1" in self.path:
+                            phrase = "The length of the chromosome " + number + " is: "
+                            contents = {phrase: str(length_final)}
+                        else:
+                            contents = contents_in + f"The length of the chromosome {number} is {str(length_final)} " \
                                                  f"<br><br>" + final_message
                         error_code = 200
                     else:
@@ -327,7 +307,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents_in = html_folder(tittle, sub_tittle)
                     contents_in += f"""The sequence of the gene {gene} is:<p><textarea rows = "20" cols= "100" 
                                 style="background-color: lightpink;">{sequence}"""
-                    contents = contents_in + f"</textarea></p>" + final_message
+                    if "json=1" in self.path:
+                        phrase = "The seqnece of the gene " + gene + " is: "
+                        contents = {phrase: sequence}
+                    else:
+                        contents = contents_in + f"</textarea></p>" + final_message
                     error_code = 200
                 except IndexError:
                     contents = Path("Error.html").read_text()
@@ -341,8 +325,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents_in = html_folder(tittle, sub_tittle)
                     initial_index = line.find("=")
                     gene = line[initial_index + 1:]
-                    contents_in += gene_info(server, gene)
-                    contents = contents_in + final_message
+                    start, end, chromosome, id_gene, length_gene = gene_info(server, gene)
+                    if "json=1" in self.path:
+                        contents = {"Starts at:": start, "Ends at": end, "Located at chromosome:": chromosome,
+                                    "Id of the gene:": id_gene, "Length of the gene: ": length_gene}
+                    else:
+                        contents_in += f"The gene gene  starts at  {str(start)}<br>The gene gene ends at {str(end)}" \
+                                       f"<br>The gene gene is located at {str(chromosome)} chromosome<br>" \
+                                       f"The id of the gene is:  {id_gene}<br>The length of the gene is: " \
+                                       f"{str(length_gene)}<br><br>"
+                        contents = contents_in + final_message
                     error_code = 200
                 except IndexError:
                     contents = Path("Error.html").read_text()
@@ -397,19 +389,21 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 except requests.exceptions.HTTPError:
                     contents = Path("Error.html").read_text()
                     error_code = 404
+        print(contents)
 
-        #talking(request_line)
-        #print(contents)
         self.send_response(error_code)
         # Define the content-type header:
         self.send_header('Content-Type', content_type)
-        self.send_header('Content-Length', len(str.encode(contents)))
-
-        # The header is finished
-        self.end_headers()
-
-        # Send the response message
-        self.wfile.write(str.encode(contents))
+        if "json=1" in self.path:
+            encoded_dict = str(contents).encode('utf-8')
+            base64_dict = base64.b64encode(encoded_dict)
+            self.send_header('Content-Length', len(encoded_dict))
+            self.end_headers()
+            self.wfile.write(encoded_dict)
+        else:
+            self.send_header('Content-Length', len(str.encode(contents)))
+            self.end_headers()
+            self.wfile.write(str.encode(contents))
 
         return
 
