@@ -144,15 +144,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             <br>The name of the species are: <ul>"""
                 counter = 0
                 list_animals = []
-                list_counter = []
                 if 0 < int(number) <= int(total_number):
                     # Viewing if it is json or not
                     if "json=1" in request_line:
                         while counter < int(number):
                             list_animals.append(list_species[counter]["common_name"])
                             counter += 1
-                            list_counter.append(str(counter)+": ")
-                        contents = dict(zip(list_counter, list_animals))
+                        contents = json.dumps({"species": list_animals})
                     else:
                         while counter < int(number):
                             animal = list_species[counter]["common_name"]
@@ -183,11 +181,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     list_karyotype = list(list_karyotype["karyotype"])
                     contents_in += f"The names of the chromosomes of the specie: {str(msg)}  are: <br><ul>"
                     if "json=1" in request_line:
-                        counter_list = []
-                        for karyotype in list_karyotype:
-                            index = str(list_karyotype.index(karyotype))
-                            counter_list.append(index)
-                        contents = dict(zip(counter_list, list_karyotype))
+                        contents = json.dumps({"karyotype": list_karyotype})
                     else:
                         for karyotype in list_karyotype:
                             contents_in += f" <li> {karyotype} </li>"

@@ -1,6 +1,8 @@
 # -- Example of a client that uses the HTTP.client library
 # -- for requesting the main page from the server
 import http.client
+import json
+import termcolor
 
 PORT = 8080
 SERVER = 'localhost'
@@ -16,7 +18,7 @@ conn = http.client.HTTPConnection(SERVER, PORT)
 # -- list_endpoints = ["/", "/listSpecies", "/karyotype", "/chromosomeLength",
 # "/geneSeq", "/geneInfo", "/geneCalc", "/geneList"]
 try:
-    conn.request("GET", "/geneList?chromo=4&start=42222&end=422233&json=1")
+    conn.request("GET", "/karyotype?specie=human&json=1")
 except ConnectionRefusedError:
     print("ERROR! Cannot connect to the Server")
     exit()
@@ -31,4 +33,12 @@ print(f"Response received!: {r1.status} {r1.reason}\n")
 data1 = r1.read().decode("utf-8")
 
 # -- Print the received data
-print(f"CONTENT: {data1}")
+print(f"CONTENT: ")
+print(data1)
+function = json.loads(data1)
+dict_itself = function["karyotype"]
+print(dict_itself)
+termcolor.cprint("  List of chromosomes {}:", 'blue')
+for i, num in enumerate(dict_itself):
+    termcolor.cprint("    Chromosome: ", 'red', end='')
+    print(num)
