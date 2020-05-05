@@ -36,40 +36,38 @@ final_message = f"""
 </html> """
 
 
-def info_species(server1):
+def info_species():
     ext = "/info/species?"
 
-    r = requests.get(server1 + ext, headers={"Content-Type": "application/json"})
+    r = requests.get(server + ext, headers={"Content-Type": "application/json"})
 
     if not r.ok:
         r.raise_for_status()
         sys.exit()
 
     decoded = r.json()
-    # print(repr(decoded["species"][-1]["common_name"]))
     list_species = list(decoded["species"])
     return list_species
 
 
-def info_assembly(server1, specie):
+def info_assembly(specie):
     ext = "/info/assembly/" + specie + "?"
 
-    r = requests.get(server1 + ext, headers={"Content-Type": "application/json"})
+    r = requests.get(server + ext, headers={"Content-Type": "application/json"})
 
     if not r.ok:
         r.raise_for_status()
         sys.exit()
 
     decoded = r.json()
-    # print(repr(decoded))
     list_karyotype = list(decoded["karyotype"])
     return list_karyotype
 
 
-def chromosome_length(server1, specie, number1):
+def chromosome_length(specie, number1):
     ext = "/info/assembly/" + specie + "/" + str(number1) + "?"
 
-    r = requests.get(server1 + ext, headers={"Content-Type": "application/json"})
+    r = requests.get(server + ext, headers={"Content-Type": "application/json"})
 
     if not r.ok:
         r.raise_for_status()
@@ -112,10 +110,10 @@ def get_sequence(id_gene):
     return seq
 
 
-def gene_info(server5, gene):
+def gene_info(gene):
     ext = "/lookup/symbol/homo_sapiens/" + gene + "?"
 
-    r = requests.get(server5 + ext, headers={"Content-Type": "application/json"})
+    r = requests.get(server + ext, headers={"Content-Type": "application/json"})
 
     if not r.ok:
         r.raise_for_status()
@@ -142,11 +140,11 @@ def percentages(seq):
     return full_dictionary
 
 
-def gene_list(server6, chromosome, start, end):
+def gene_list(chromosome, start, end):
     ext = "/overlap/region/human/" + chromosome + ":" + start + "-" + end + \
           "?feature=gene;feature=transcript;feature=cds;feature=exon"
 
-    r = requests.get(server6 + ext, headers={"Content-Type": "application/json"})
+    r = requests.get(server + ext, headers={"Content-Type": "application/json"})
 
     if not r.ok:
         r.raise_for_status()
@@ -205,7 +203,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 index_eq = line.find("=")
                 msg = line[index_eq + 1:]
                 contents_in = html_folder(tittle, sub_tittle)
-                a = info_species(server)
+                a = info_species()
                 total_number = len(a)
                 contents_in += f"<p>There are a total of  {str(total_number)} species in the database<br>"
                 counter = 0
@@ -240,11 +238,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 sub_tittle = "Karyotype of a specie"
                 index_eq = line.find("=")
                 msg = line[index_eq + 1:]
-                a = info_species(server)
+                a = info_species()
                 list_species = list_names(a)
                 if msg in list_species:
                     contents_in = html_folder(tittle, sub_tittle)
-                    list_karyotype = info_assembly(server, msg)
+                    list_karyotype = info_assembly(msg)
                     contents_in += f"The names of the chromosomes of the specie: {str(msg)}  are: <br><ul>"
                     if "json=1" in self.path:
                         counter_list = []
@@ -267,7 +265,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 index_1 = line.find("=")
                 index_2 = line.find("&")
                 specie = line[index_1 + 1: index_2]
-                a = info_species(server)
+                a = info_species()
                 list_species = list_names(a)
 
                 if specie in list_species:
@@ -276,9 +274,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     number = 0
                     for n in list_number:
                         number = n
-                    list_chromosome = info_assembly(server, specie)
+                    list_chromosome = info_assembly(specie)
                     if number in list_chromosome:
-                        length_final = chromosome_length(server, specie, number)
+                        length_final = chromosome_length(specie, number)
                         contents_in = html_folder(tittle, sub_tittle)
                         if "json=1" in self.path:
                             phrase = "The length of the chromosome " + number + " is: "
@@ -324,7 +322,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents_in = html_folder(tittle, sub_tittle)
                     initial_index = line.find("=")
                     gene = line[initial_index + 1:]
-                    start, end, chromosome, id_gene, length_gene = gene_info(server, gene)
+                    start, end, chromosome, id_gene, length_gene = gene_info(gene)
                     if "json=1" in self.path:
                         contents = {"Starts at:": start, "Ends at": end, "Located at chromosome:": chromosome,
                                     "Id of the gene:": id_gene, "Length of the gene: ": length_gene}
@@ -382,7 +380,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     index_b = list_[2].find("&")
                     start = list_[2][:index_b]
                     end = list_[3]
-                    function = gene_list(server, chromosome, start, end)
+                    function = gene_list(chromosome, start, end)
                     contents_in += f"The genes in the range: {start} - {end} are: <br><br>"
                     if "json=1" in self.path:
                         list_keys = []
