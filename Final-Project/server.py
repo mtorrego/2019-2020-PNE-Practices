@@ -144,15 +144,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             <br>The name of the species are: <ul>"""
                 counter = 0
                 list_animals = []
-                list_counter = []
                 if 0 < int(number) <= int(total_number):
                     # Viewing if it is json or not
                     if "json=1" in request_line:
                         while counter < int(number):
                             list_animals.append(list_species[counter]["common_name"])
                             counter += 1
-                            list_counter.append(str(counter)+": ")
-                        contents = dict(zip(list_counter, list_animals))
+                        contents = json.dumps({"species": list_animals})
                     else:
                         while counter < int(number):
                             animal = list_species[counter]["common_name"]
@@ -183,11 +181,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     list_karyotype = list(list_karyotype["karyotype"])
                     contents_in += f"The names of the chromosomes of the specie: {str(msg)}  are: <br><ul>"
                     if "json=1" in request_line:
-                        counter_list = []
-                        for karyotype in list_karyotype:
-                            index = str(list_karyotype.index(karyotype))
-                            counter_list.append(index)
-                        contents = dict(zip(counter_list, list_karyotype))
+                        contents = json.dumps({"karyotype": list_karyotype})
                     else:
                         for karyotype in list_karyotype:
                             contents_in += f" <li> {karyotype} </li>"
@@ -227,8 +221,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                         length = length_final["length"]
                         contents_in = html_folder(tittle, sub_tittle)
                         if "json=1" in request_line:
-                            phrase = "The length of the chromosome " + number + " is: "
-                            contents = {phrase: str(length)}
+                            contents = json.dumps({"length": str(length)})
                         else:
                             contents = contents_in + f"The length of the chromosome {number} is {str(length)} " \
                                                  f"<br><br>" + final_message
@@ -258,8 +251,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                 style="background-color: lightpink;">{sequence}"""
                     # Viewing if it is json or not
                     if "json=1" in request_line:
-                        phrase = "The seqnece of the gene " + gene + " is: "
-                        contents = {phrase: sequence}
+                        contents = json.dumps({"sequence": sequence})
                     else:
                         contents = contents_in + f"</textarea></p>" + final_message
                     error_code = 200
@@ -286,8 +278,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     length_gene = end - start
                     # Viewing if it is json or not
                     if "json=1" in request_line:
-                        contents = {"Starts at:": start, "Ends at": end, "Located at chromosome:": chromosome,
-                                    "Id of the gene:": id_gene, "Length of the gene: ": length_gene}
+                        dict_info = {"Start": start, "End": end, "Chromosome": chromosome,
+                                     "Id": id_gene, "Length": length_gene}
+                        contents = json.dumps({"info": dict_info})
                     else:
                         contents_in += f"The gene gene  starts at  {str(start)}<br>The gene gene ends at {str(end)}" \
                                        f"<br>The gene gene is located at {str(chromosome)} chromosome<br>" \
@@ -320,12 +313,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     contents_in += f"The length of the gene is: {str(seq.len())} <br>Information about the bases<ul>"
                     # Viewing if it is json or not
                     if "json=1" in request_line:
-                        for n in list_keys:
-                            index_base = list_keys.index(n)
-                            list_keys[index_base] = "Base: " + list_keys[index_base]
-                        list_keys.append("The length of the gene is: ")
+                        list_keys.append("Length")
                         list_values.append(str(seq.len()))
-                        contents = dict(zip(list_keys, list_values))
+                        final_dict = dict(zip(list_keys, list_values))
+                        contents = json.dumps({"Calc": final_dict})
                     else:
                         for n in list_keys:
                             index_base = list_keys.index(n)
@@ -364,7 +355,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                 list_values.append(gene_list_[index]["external_name"])
                             else:
                                 list_values.append("No name found")
-                        contents = dict(zip(list_keys, list_values))
+                        final_dict = dict(zip(list_keys, list_values))
+                        contents = json.dumps({"List": final_dict})
                     else:
                         for n in gene_list_:
                             index = gene_list_.index(n)

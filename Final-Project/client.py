@@ -18,7 +18,7 @@ conn = http.client.HTTPConnection(SERVER, PORT)
 # -- list_endpoints = ["/", "/listSpecies", "/karyotype", "/chromosomeLength",
 # "/geneSeq", "/geneInfo", "/geneCalc", "/geneList"]
 try:
-    conn.request("GET", "/karyotype?specie=human&json=1")
+    conn.request("GET", "/geneList?chromo=4&start=42222&end=422233&json=1")
 except ConnectionRefusedError:
     print("ERROR! Cannot connect to the Server")
     exit()
@@ -36,9 +36,11 @@ data1 = r1.read().decode("utf-8")
 print(f"CONTENT: ")
 print(data1)
 function = json.loads(data1)
-dict_itself = function["karyotype"]
-print(dict_itself)
-termcolor.cprint("  List of chromosomes {}:", 'blue')
-for i, num in enumerate(dict_itself):
-    termcolor.cprint("    Chromosome: ", 'red', end='')
-    print(num)
+key_word = function["List"]
+
+termcolor.cprint("List of the genes in the range 42222-422233 of the chromosome 4: ", 'blue')
+list_keys = list(key_word.keys())
+list_values = list(key_word.values())
+for key in list_keys:
+    index = list_keys.index(key)
+    print(list_keys[index] + " --> " + list_values[index])
