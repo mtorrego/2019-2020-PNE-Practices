@@ -433,7 +433,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         self.send_header('Content-Type', content_type)
         # In order to return the information in the last level i had to create this if/elif to separate depending if it
         # is json or not, because it has to be returned in different ways.
-        # As i have explained in the report, i found that i have to use this in the internet
+        # As i have explained in the report, i found that i have to use this in the internet, i have to convert first
+        # the contents into string, because if i dont do it, the exercise don not return anything
         if "json=1" in request_line:
             encoded_dict = str(contents).encode('utf-8')
             # -- base64_dict = base64.b64encode(encoded_dict)

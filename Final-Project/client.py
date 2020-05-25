@@ -38,6 +38,7 @@ print(data1)
 function = json.loads(data1)
 key_word = function["List"]
 
+# This is the example for the last endpoint
 termcolor.cprint("List of the genes in the range 42222-422233 of the chromosome 4: ", 'blue')
 list_keys = list(key_word.keys())
 list_values = list(key_word.values())
